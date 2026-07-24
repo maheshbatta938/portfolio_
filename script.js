@@ -496,7 +496,7 @@ if (closeChat) {
 async function askPortfolioAI(message) {
     try {
         // Point to the correct local port (3005) configured in backend/.env
-        const response = await fetch("http://localhost:3005/api/chat", {
+        const response = await fetch("https://portfolio-3c3r.onrender.com/api/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
