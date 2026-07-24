@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahesh Batta | Software Engineer Portfolio</title>
+
+    <!-- SEO / Meta Tags -->
+    <meta name="description"
+        content="Explore Mahesh Batta's professional portfolio. Backend developer specializing in Node.js, REST APIs, cloud architectures, and machine learning models.">
+    <meta name="keywords"
+        content="Mahesh Batta, Backend Engineer, Software Developer, Angular, Node.js, Express, MySQL, MongoDB, AWS CCP, Portfolio">
+    <meta name="author" content="Mahesh Batta">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://maheshbatta.com/">
+    <meta property="og:title" content="Mahesh Batta | Software Engineer Portfolio">
+    <meta property="og:description"
+        content="Backend developer specializing in Node.js, Express, databases, cloud, and stateful AI agent integrations.">
+    <meta property="og:image" content="assets/images/xyz.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Mahesh Batta | Software Engineer Portfolio">
+    <meta property="twitter:description"
+        content="Backend developer specializing in Node.js, Express, databases, cloud, and stateful AI agent integrations.">
+    <meta property="twitter:image" content="assets/images/xyz.png">
+
+    <!-- Google Fonts: Outfit (Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Devicon Badges -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <!-- Custom Style CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Canvas Particle Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="header">
+        <a href="#home" class="logo">
+            Mahesh
+        </a>
+
+        <nav class="navbar">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </nav>
+
+        <div id="menu-btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">
+                <i class="fa-solid fa-circle"></i>
+                Open to Software Engineer Opportunities
+            </span>
+            <h3>Hello, I'm</h3>
+            <h1>Mahesh Batta</h1>
+            <h2><span id="typing"></span></h2>
+            <p>
+                Software Engineer passionate about building scalable enterprise applications, robust backend systems,
+                and AI-powered solutions using modern technologies.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="assets/images/BattaMahesh.pdf" download="Mahesh_Batta_Resume.pdf" class="btn primary-btn">
+                    <i class="fa-solid fa-download"></i>
+                    Download Resume
+                </a>
+                <a href="#contact" class="btn secondary-btn">
+                    Contact Me
+                </a>
+            </div>
+
+            <div class="hero-social">
+                <a href="https://www.linkedin.com/in/mahesh-batta-a25a81328/" target="_blank" rel="noopener noreferrer"
+                    title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/maheshbatta938" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:maheshbatta539@gmail.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.instagram.com/maheshbatta_/" target="_blank" rel="noopener noreferrer"
+                    title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="image-container">
+                <div class="image-glow"></div>
+                <img src="assets/images/maheshbatta.png" alt="Mahesh Batta">
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS GRID -->
+    <section class="stats">
+        <div class="stat-card">
+            <h2 data-target="400">0</h2>
+            <span>DSA Problems Solved</span>
+        </div>
+        <div class="stat-card">
+            <h2 data-target="2">0</h2>
+            <span>Professional Internships</span>
+        </div>
+        <div class="stat-card">
+            <h2 data-target="20">0</h2>
+            <span>Technologies Mastered</span>
+        </div>
+    </section>
+
+    <!-- ABOUT ME -->
+    <section id="about" class="about">
+        <div class="section-heading">
+            <span>ABOUT ME</span>
+            <h2>Designing Scalable Backend Architectures & <span>AI Powered Solutions</span></h2>
+            <p>
+                Passionate Software Engineer specializing in backend architectures, database query performance, secure
+                API design, and containerized cloud deployments. Demonstrated problem solver with solid DSA foundations
+                and AI/ML model integration skills.
+            </p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-card">
+                <i class="fa-solid fa-server"></i>
+                <h3>Backend Engineering</h3>
+                <p>Creating robust RESTful microservices, securing routes with JWT gates, caching with Redis, and
+                    containerizing via Docker.</p>
+            </div>
+
+            <div class="about-card">
+                <i class="fa-solid fa-laptop-code"></i>
+                <h3>System Design</h3>
+                <p>Designing scalable distributed architectures, database schemas, and microservices alongside modular
+                    web client interfaces using Angular and React.</p>
+            </div>
+
+            <div class="about-card">
+                <i class="fa-solid fa-brain"></i>
+                <h3>AI & Data Science</h3>
+                <p>Developing predictive models, executing data pipelines, and utilizing NLP or GenAI integrations.</p>
+            </div>
+
+            <div class="about-card">
+                <i class="fa-solid fa-code"></i>
+                <h3>Algorithmic Logic</h3>
+                <p>Demonstrated problem solver with 400+ questions answered on platforms like LeetCode and
+                    GeeksforGeeks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WORK EXPERIENCE TIMELINE -->
+    <section id="experience" class="experience">
+        <div class="section-heading">
+            <span>EXPERIENCE</span>
+            <h2>Professional Journey</h2>
+        </div>
+
+        <div class="timeline">
+            <!-- Recordent Timeline Item -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="company-info">
+                        <div class="company-badge badge-recordent">R</div>
+                        <div>
+                            <h3>Software Developer Intern</h3>
+                            <h4>Recordent Private Limited</h4>
+                            <span class="timeline-date">Mar 2026 - Present</span>
+                        </div>
+                    </div>
+                    <ul>
+                        <li>Designed and optimized Node.js / Express.js REST APIs for enterprise SaaS products.</li>
+                        <li>Developed a date range filtering database pipeline for the current financial year,
+                            optimizing MySQL query performance.</li>
+                        <li>Engineered secure user sign-up journeys and advanced data-filtering logics in the backend.
+                        </li>
+                        <li>Refactored relational database queries to reduce SaaS reporting generation latency.</li>
+                        <li>Contributed to migrations of enterprise frontends from Angular 14 to Angular 16 and
+                            Bootstrap 5 layouts.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Codex Timeline Item -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="company-info">
+                        <div class="company-badge badge-codex">C</div>
+                        <div>
+                            <h3>Backend Developer Intern</h3>
+                            <h4>Codex</h4>
+                            <span class="timeline-date">Jul 2025 - Aug 2025</span>
+                        </div>
+                    </div>
+                    <ul>
+                        <li>Architected backend RESTful APIs and robust CRUD services with Node.js and Express.</li>
+                        <li>Designed database schemas and stored state patterns using MySQL (Relational) and MongoDB
+                            (NoSQL).</li>
+                        <li>Secured route endpoints by integrating JSON Web Token (JWT) authorization middleware.</li>
+                        <li>Created comprehensive API test suites using Postman to automate route checking.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- SKILLS CONSOLIDATED WITH FILTERS -->
+    <section id="skills" class="skills-section">
+        <div class="section-heading">
+            <span>TECH STACK</span>
+            <h2>Technologies & Skills</h2>
+            <p>Filter my tech stack to view languages, frontend frameworks, databases, tools, or AI libraries.</p>
+        </div>
+
+        <div class="filter-wrapper">
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn active" data-filter="languages">Languages</button>
+            <button class="filter-btn" data-filter="frontend">Frontend</button>
+            <button class="filter-btn" data-filter="backend">Backend</button>
+            <button class="filter-btn" data-filter="database-devops">Databases & DevOps</button>
+            <button class="filter-btn" data-filter="ai-ml">AI & Data Science</button>
+        </div>
+
+
+        <div class="skills-container">
+            <!-- Languages -->
+            <div class="skill-card" data-category="languages">
+                <i class="devicon-java-plain colored"></i>
+                <h3>Java</h3>
+            </div>
+            <div class="skill-card" data-category="languages">
+                <i class="devicon-python-plain colored"></i>
+                <h3>Python</h3>
+            </div>
+            <div class="skill-card" data-category="languages">
+                <i class="devicon-javascript-plain colored"></i>
+                <h3>JavaScript</h3>
+            </div>
+            <div class="skill-card" data-category="languages">
+                <i class="devicon-typescript-plain colored"></i>
+                <h3>TypeScript</h3>
+            </div>
+
+            <!-- Frontend -->
+            <div class="skill-card" data-category="frontend">
+                <i class="devicon-angularjs-plain colored"></i>
+                <h3>Angular</h3>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <i class="devicon-react-original colored"></i>
+                <h3>React</h3>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <i class="devicon-html5-plain colored"></i>
+                <h3>HTML5</h3>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <i class="devicon-css3-plain colored"></i>
+                <h3>CSS3</h3>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <i class="devicon-bootstrap-plain colored"></i>
+                <h3>Bootstrap</h3>
+            </div>
+            <div class="skill-card" data-category="frontend">
+                <i class="devicon-nextjs-plain colored"></i>
+                <h3>Next.js</h3>
+            </div>
+
+            <!-- Backend -->
+            <div class="skill-card" data-category="backend">
+                <i class="devicon-nodejs-plain colored"></i>
+                <h3>Node.js</h3>
+            </div>
+            <div class="skill-card" data-category="backend">
+                <i class="devicon-express-original"></i>
+                <h3>Express.js</h3>
+            </div>
+            <div class="skill-card" data-category="backend">
+                <i class="devicon-nestjs-plain colored"></i>
+                <h3>NestJS</h3>
+            </div>
+
+            <!-- Databases & DevOps -->
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-mysql-plain colored"></i>
+                <h3>MySQL</h3>
+            </div>
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-mongodb-plain colored"></i>
+                <h3>MongoDB</h3>
+            </div>
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-redis-plain colored"></i>
+                <h3>Redis</h3>
+            </div>
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-docker-plain colored"></i>
+                <h3>Docker</h3>
+            </div>
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-git-plain colored"></i>
+                <h3>Git</h3>
+            </div>
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-github-original"></i>
+                <h3>GitHub</h3>
+            </div>
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-azure-plain colored"></i>
+                <h3>Azure</h3>
+            </div>
+            <div class="skill-card" data-category="database-devops">
+                <i class="devicon-amazonwebservices-original colored"></i>
+                <h3>AWS</h3>
+            </div>
+
+            <!-- AI & Data Science -->
+            <div class="skill-card" data-category="ai-ml">
+                <i class="devicon-python-plain colored"></i>
+                <h3>Python</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="devicon-scikitlearn-plain colored"></i>
+                <h3>Scikit-Learn</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="devicon-tensorflow-original colored"></i>
+                <h3>TensorFlow</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="devicon-pandas-original colored"></i>
+                <h3>Pandas</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="devicon-numpy-original colored"></i>
+                <h3>NumPy</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="devicon-opencv-plain colored"></i>
+                <h3>OpenCV</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Linear & Logistic Regression</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-network-wired"></i>
+                <h3>Decision Trees & Random Forests</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>XGBoost Classifier</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-arrows-split-up-and-left"></i>
+                <h3>Support Vector Machines (SVM)</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-circle-nodes"></i>
+                <h3>Bayesian Networks</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-cubes-stacked"></i>
+                <h3>K-Means Clustering</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-people-arrows"></i>
+                <h3>K-Nearest Neighbors (KNN)</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-calculator"></i>
+                <h3>Naive Bayes Classifiers</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-robot"></i>
+                <h3>Agentic AI</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-comments"></i>
+                <h3>Large Language Models (LLMs)</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-database"></i>
+                <h3>Retrieval-Augmented Gen (RAG)</h3>
+            </div>
+            <div class="skill-card" data-category="ai-ml">
+                <i class="fa-solid fa-terminal"></i>
+                <h3>Prompt Engineering</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS WITH FILTERING -->
+    <section id="projects" class="projects">
+        <div class="section-heading">
+            <span>PROJECTS</span>
+            <h2>Featured Work</h2>
+        </div>
+
+        <div class="project-filter-wrapper">
+            <button class="proj-filter-btn active" data-filter="all">All Projects</button>
+            <button class="proj-filter-btn" data-filter="web">Web Applications</button>
+            <button class="proj-filter-btn" data-filter="ai">AI & Data Science</button>
+        </div>
+
+        <div class="project-grid">
+            <!-- NovaBank (Full Stack + AI) -->
+            <div class="project-card" data-category="web ai">
+                <div class="project-image-wrapper">
+                    <span class="featured-badge">Featured &bull; Full Stack + AI</span>
+                    <img src="assets/images/novabank.png" alt="NovaBank AI Digital Banking Platform">
+                </div>
+                <div class="project-content">
+                    <h3>NovaBank – NextGen AI Banking</h3>
+                    <p>Next-generation full stack digital banking platform integrated with AI financial advisory,
+                        real-time transaction processing, credit scoring, and Razorpay payment gateways.</p>
+                    <div class="tech-stack">
+                        <span>Angular</span>
+                        <span>NestJS</span>
+                        <span>Docker</span>
+                        <span>Redis</span>
+                        <span>Prisma</span>
+                        <span>Gemini AI</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="disabled-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <span class="coming-soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 1 -->
+            <div class="project-card" data-category="web">
+                <div class="project-image-wrapper">
+                    <span class="featured-badge">Featured</span>
+                    <img src="assets/images/recordentproject.png" alt="Enterprise Buyer Management">
+                </div>
+                <div class="project-content">
+                    <h3>Enterprise Buyer Management</h3>
+                    <p>Enterprise SaaS application built with Angular, Node.js, and MySQL for buyer profiles, payment
+                        subscriptions, and downloadable reports.</p>
+                    <div class="tech-stack">
+                        <span>Angular</span>
+                        <span>Node.js</span>
+                        <span>MySQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/maheshbatta938/recordent-assignment" target="_blank"
+                            rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://recordent-assignment-2.onrender.com/" target="_blank" rel="noopener noreferrer"
+                            class="live-link">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card" data-category="web">
+                <div class="project-image-wrapper">
+                    <span class="featured-badge">Featured</span>
+                    <img src="assets/images/makeanote.png" alt="Make A Note">
+                </div>
+                <div class="project-content">
+                    <h3>Make A Note</h3>
+                    <p>Full Stack note organizer incorporating Firebase authentication, Docker deployments, Redis
+                        caching, and automated CI/CD pipeline structures.</p>
+                    <div class="tech-stack">
+                        <span>Angular</span>
+                        <span>Node.js</span>
+                        <span>Redis</span>
+                        <span>Docker</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="disabled-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <span class="coming-soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card" data-category="web">
+                <div class="project-image-wrapper">
+                    <img src="assets/images/memorymania.png" alt="Memory Mania">
+                </div>
+                <div class="project-content">
+                    <h3>NotesApp</h3>
+                    <p>A secure notes saving application with search functionality and JWT authentication built using
+                        the MERN stack.</p>
+                    <div class="tech-stack">
+                        <span>MongoDB</span>
+                        <span>Express</span>
+                        <span>React</span>
+                        <span>Node.js</span>
+                        <span>JWT</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/maheshbatta938/memorymania" target="_blank"
+                            rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://memorymania.vercel.app/" target="_blank" rel="noopener noreferrer"
+                            class="live-link">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card" data-category="ai">
+                <div class="project-image-wrapper">
+                    <span class="featured-badge">Featured</span>
+                    <img src="assets/images/xyz.png" alt="AI Portfolio Assistant">
+                </div>
+                <div class="project-content">
+                    <h3>AI Portfolio Assistant</h3>
+                    <p>AI agent integrated with Google Gemini API to answer Recruiter questions regarding experience,
+                        skills, and resume details in real time.</p>
+                    <div class="tech-stack">
+                        <span>Gemini API</span>
+                        <span>Node.js</span>
+                        <span>Express</span>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="disabled-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="#" id="openChatProjectBtn" class="live-link">
+                            <i class="fa-solid fa-comments"></i> Try Chatbot
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card" data-category="ai">
+                <div class="project-image-wrapper">
+                    <img src="assets/images/abtesting.png" alt="Bayesian Network A/B Testing">
+                </div>
+                <div class="project-content">
+                    <h3>A/B Testing Bayesian Network</h3>
+                    <p>Bayesian network application that compares conversion options and estimates probabilities to
+                        drive business decisions using Pandas and NumPy.</p>
+                    <div class="tech-stack">
+                        <span>Python</span>
+                        <span>Bayesian Network</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/maheshbatta938/ab-testing" target="_blank"
+                            rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a href="https://ab-testing-fawn.vercel.app/" target="_blank" rel="noopener noreferrer"
+                            class="live-link">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Live
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card" data-category="ai">
+                <div class="project-image-wrapper">
+                    <img src="assets/images/creditcardfraud.png" alt="Credit Card Fraud Detection">
+                </div>
+                <div class="project-content">
+                    <h3>Credit Card Fraud Detection</h3>
+                    <p>Machine learning classification model built with XGBoost algorithm to analyze transactions,
+                        detect anomalies, and filter out false warnings.</p>
+                    <div class="tech-stack">
+                        <span>Python</span>
+                        <span>XGBoost</span>
+                        <span>Scikit-Learn</span>
+                        <span>Pandas</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/maheshbatta938/creditcard-fraud-detection" target="_blank"
+                            rel="noopener noreferrer">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <span class="coming-soon-badge">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MILESTONES / HIGHLIGHTS -->
+    <section id="achievements" class="achievements">
+        <div class="section-heading">
+            <span>ACHIEVEMENTS</span>
+            <h2>Milestones & Highlights</h2>
+        </div>
+
+        <div class="achievement-grid">
+            <!-- AWS CCP -->
+            <div class="achievement-card">
+                <div class="achievement-icon icon-aws"><i class="fa-brands fa-aws"></i></div>
+                <div class="achievement-info">
+                    <h3>AWS CCP</h3>
+                    <p>Certified Cloud Practitioner</p>
+                </div>
+            </div>
+
+            <!-- Gemini AI -->
+            <div class="achievement-card">
+                <div class="achievement-icon icon-gemini"><i class="fa-solid fa-robot"></i></div>
+                <div class="achievement-info">
+                    <h3>Gemini AI</h3>
+                    <p>Stateful chatbot integration</p>
+                </div>
+            </div>
+
+            <!-- Angular & Bootstrap Upgrade -->
+            <div class="achievement-card">
+                <div class="achievement-icon icon-upgrade"><i class="fa-solid fa-rocket"></i></div>
+                <div class="achievement-info">
+                    <h3>Framework Upgrades</h3>
+                    <p>Angular 16 & Bootstrap 5 migrations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="education">
+        <div class="section-heading">
+            <span>EDUCATION</span>
+            <h2>Academic Journey</h2>
+        </div>
+
+        <div class="education-card">
+            <div class="edu-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h3>Bachelor of Technology</h3>
+            <h4>Computer Science and Engineering (Data Science)</h4>
+            <h5>Geethanjali College of Engineering and Technology</h5>
+            <div class="edu-meta">
+                <span><i class="fa-solid fa-calendar"></i> 2023 - 2026</span>
+                <span><i class="fa-solid fa-location-dot"></i> Hyderabad, Telangana</span>
+            </div>
+            <p>Focusing on Algorithms, Database Management, Operating Systems, Machine Learning models, and Data
+                Analytics pipelines.</p>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact">
+        <div class="section-heading">
+            <span>CONTACT</span>
+            <h2>Let's Build Something Amazing</h2>
+            <p>Seeking software developer opportunities, internships, and creative collaborations.</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-card" id="emailCard">
+                    <i class="fa-solid fa-envelope"></i>
+                    <div>
+                        <h4>Email</h4>
+                        <p>maheshbatta539@gmail.com</p>
+                        <span class="click-copy-hint">Click to copy email</span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-phone"></i>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+91 9381195890</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <div>
+                        <h4>Location</h4>
+                        <p>Hyderabad, Telangana, India</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <div>
+                        <h4>Status</h4>
+                        <p>Available for Professional Roles</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="contactForm" action="https://formspree.io/f/mrenengw" method="POST">
+                <div class="input-group">
+                    <input type="text" id="formName" name="name" required minlength="3" pattern=".*\S.*"
+                        placeholder=" ">
+                    <label for="formName">Your Name</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="formEmail" name="email" required placeholder=" ">
+                    <label for="formEmail">Email Address</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="formSubject" name="subject" required minlength="3" pattern=".*\S.*"
+                        placeholder=" ">
+                    <label for="formSubject">Subject</label>
+                </div>
+                <div class="input-group">
+                    <textarea id="formMessage" name="message" rows="5" required minlength="5"
+                        placeholder=" "></textarea>
+                    <label for="formMessage">Write your message...</label>
+                </div>
+                <button type="submit" class="btn primary-btn btn-send">
+                    <span>Send Message</span>
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- PREMIUM SLIDING CHAT DRAWER -->
+    <div class="chatbot-trigger" id="chatIcon" onclick="openChatDrawer()" title="Open Mahesh AI Chat">
+        <i class="fa-solid fa-comment-dots"></i>
+        <span class="trigger-ping"></span>
+    </div>
+
+    <div class="chat-drawer" id="chatWindow">
+        <div class="chat-header">
+            <div class="chat-bot-identity">
+                <div class="avatar-wrapper">
+                    <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+                    <span class="status-indicator"></span>
+                </div>
+                <div>
+                    <h4>Ask Mahesh AI</h4>
+                    <span>Online &bull; Powered by Gemini</span>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button id="clearChat" title="Clear Chat History" aria-label="Clear Chat">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+                <button id="closeChat" aria-label="Close Chat" onclick="closeChatDrawer()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-messages-container"
+            style="position: relative; flex: 1; overflow: hidden; display: flex; flex-direction: column;">
+            <div class="chat-messages" id="messages">
+                <div class="bot-message animate-message">
+                    <p>Hi there! I am Mahesh's AI Portfolio Assistant. 🤖</p>
+                    <p>I can help you answer questions about his professional experience, technical skills, academic
+                        background, projects, or how to contact him directly. What would you like to know?</p>
+                </div>
+            </div>
+            <button id="chatScrollDown" class="chat-scroll-down-btn" aria-label="Scroll to bottom">
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+        </div>
+
+        <!-- Suggestions Chips inside chat window -->
+        <div class="chat-suggestions">
+            <button class="suggest-chip">Tell me about Mahesh</button>
+            <button class="suggest-chip">Tech Stack</button>
+            <button class="suggest-chip">Featured Projects</button>
+            <button class="suggest-chip">Contact Info</button>
+        </div>
+
+        <div class="chat-footer">
+            <div class="input-wrapper">
+                <textarea id="chatInput" placeholder="Ask about Mahesh's experience..." rows="1"
+                    aria-label="Chat input"></textarea>
+                <button id="sendBtn" aria-label="Send message">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <h2>Mahesh Batta</h2>
+            <p>Software Engineer &bull; Full Stack Developer &bull; AI/ML Enthusiast</p>
+
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/mahesh-batta-a25a81328/" target="_blank" rel="noopener noreferrer"
+                    title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/maheshbatta938" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://leetcode.com/u/maheshbatta/" target="_blank" rel="noopener noreferrer"
+                    title="LeetCode">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"
+                        style="display: block; margin: auto;">
+                        <path
+                            d="M16.102 17.93l-2.69 2.6c-.773.75-2.076.75-2.85 0l-5.31-5.125a2.07 2.07 0 0 1 0-2.837l2.68-2.587c.315-.3.824-.3 1.139 0s.315.79 0 1.1l-2.08 2.007a.828.828 0 0 0 0 1.135l5.308 5.13c.315.3.824.3 1.139 0l2.08-2.008c.315-.3.824-.3 1.139 0s.315.79 0 1.1zM22 10.513c0-.43-.36-.78-.81-.78h-8.082a.83.83 0 0 0-.586.228L9.843 12.55c-.315-.3-.315-.79 0-1.1c.315-.3.824-.3 1.139 0l2.69-2.587a2.07 2.07 0 0 1 2.85 0l5.31 5.125c.773.75.773 1.97 0 2.837l-2.68 2.587c-.315.3-.824.3-1.139 0a.78.78 0 0 1 0-1.1l2.08-2.007c.315-.3.315-.79 0-1.1l-5.308-5.13a.83.83 0 0 0-1.139 0l-2.08 2.008c-.315.3-.824.3-1.139 0s-.315-.79 0-1.1z" />
+                    </svg>
+                </a>
+                <a href="https://www.geeksforgeeks.org/profile/maheshbatta" target="_blank" rel="noopener noreferrer"
+                    title="GeeksforGeeks">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"
+                        style="display: block; margin: auto;">
+                        <path
+                            d="M21.45 14.315c-.143.28-.334.532-.565.745a3.691 3.691 0 0 1-1.104.695 4.51 4.51 0 0 1-3.116-.016 3.79 3.79 0 0 1-2.135-2.078 3.571 3.571 0 0 1-.13-.353h7.418a4.26 4.26 0 0 1-.368 1.008zm-11.99-.654a3.793 3.793 0 0 1-2.134 2.078 4.51 4.51 0 0 1-3.117.016 3.7 3.7 0 0 1-1.104-.695 2.652 2.652 0 0 1-.564-.745 4.221 4.221 0 0 1-.368-1.006H9.59c-.038.12-.08.238-.13.352zm14.501-1.758a3.849 3.849 0 0 0-.082-.475l-9.634-.008a3.932 3.932 0 0 1 1.143-2.348c.363-.35.79-.625 1.26-.809a3.97 3.97 0 0 1 4.484.957l1.521-1.49a5.7 5.7 0 0 0-1.922-1.357 6.283 6.283 0 0 0-2.544-.49 6.283 6.283 0 0 0-2.544.49A5.7 5.7 0 0 0 1.34 7.73l1.52 1.49a4.166 4.166 0 0 1 4.484-.958c.47.184.898.46 1.26.81.368.36.66.792.859 1.268.146.344.242.708.285 1.08l-9.635.008A4.714 4.714 0 0 0 0 12.457a6.493 6.493 0 0 0 .345 2.127 4.927 4.927 0 0 0 1.08 1.783c.528.56 1.17 1 1.88 1.293a6.454 6.454 0 0 0 2.504.457c.824.005 1.64-.15 2.404-.457a5.986 5.986 0 0 0 1.964-1.277 6.116 6.116 0 0 0 1.686-3.076h.273a6.13 6.13 0 0 0 1.686 3.077 5.99 5.99 0 0 0 1.964 1.276 6.345 6.345 0 0 0 2.405.457 6.45 6.45 0 0 0 2.502-.457 5.42 5.42 0 0 0 1.882-1.293 4.928 4.928 0 0 0 1.08-1.783A6.52 6.52 0 0 0 24 12.457a4.757 4.757 0 0 0-.039-.554z" />
+                    </svg>
+                </a>
+                <a href="https://www.instagram.com/maheshbatta_/" target="_blank" rel="noopener noreferrer"
+                    title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:maheshbatta539@gmail.com" title="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+
+            <p class="copyright">&copy; 2026 Mahesh Batta. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SCROLL TO TOP -->
+    <button id="topBtn" aria-label="Scroll to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- MARKED LIBRARY FOR MD TO HTML PARSING -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- MAIN FRONTEND JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
