@@ -1,6 +1,0 @@
-- [x] Create Task list for tracking progress `task.md`
-- [x] Update `backend/data/systemPrompt.txt` with strict pointwise formatting rules
-- [x] Revamp chatbot widget HTML structure in `index.html`
-- [x] Revamp chatbot widget styles in `style.css` (Premium glassmorphism, glows, transitions)
-- [x] Verify UI and point-wise training format
-- [x] Create `walkthrough.md` summarizing the modifications

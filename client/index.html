@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Theme init (runs before paint to avoid a flash of the wrong theme) -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("mahesh_portfolio_theme");
+          var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          document.documentElement.classList.toggle("dark", theme === "dark");
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+
+    <title>Mahesh Batta | Software Engineer Portfolio</title>
+
+    <meta name="description" content="Explore Mahesh Batta's professional portfolio. Full-stack developer specializing in Node.js, REST APIs, cloud architectures, and AI-powered solutions." />
+    <meta name="keywords" content="Mahesh Batta, Backend Engineer, Software Developer, Angular, React, Node.js, Express, MySQL, MongoDB, AWS CCP, Portfolio" />
+    <meta name="author" content="Mahesh Batta" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mahesh Batta | Software Engineer Portfolio" />
+    <meta property="og:description" content="Full-stack developer specializing in Node.js, Express, databases, cloud, and AI agent integrations." />
+    <meta property="og:image" content="/assets/images/xyz.png" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Mahesh Batta | Software Engineer Portfolio" />
+    <meta property="twitter:description" content="Full-stack developer specializing in Node.js, Express, databases, cloud, and AI agent integrations." />
+    <meta property="twitter:image" content="/assets/images/xyz.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome (social + misc brand icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <!-- Devicon (technology logos for the Skills grid) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

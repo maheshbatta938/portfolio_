@@ -1,0 +1,1042 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*==================================================
+    ADOBE SPECTRUM TOKENS
+
+    Greys are Spectrum's own ramps, verbatim.
+    Accent is Adobe corporate red (#FA0F00).
+    Section hues are the real Adobe product colours.
+
+    The layout follows how Adobe's own apps are built:
+    a mid-grey CANVAS with near-white PANELS floating
+    on it. That contrast is what makes glass legible —
+    a white panel on a white page is just a page.
+==================================================*/
+:root {
+    /* Spectrum Light greys */
+    --gray-50: #ffffff;
+    --gray-75: #fdfdfd;
+    --gray-100: #f8f8f8;
+    --gray-200: #e6e6e6;
+    --gray-300: #d5d5d5;
+    --gray-400: #b1b1b1;
+    --gray-500: #909090;
+    --gray-600: #6d6d6d;
+    --gray-700: #464646;
+    --gray-800: #222222;
+    --gray-900: #000000;
+
+    /* --- Canvas & panels --- */
+    --bg: var(--gray-200);
+    --surface: var(--gray-50);
+    --surface-2: var(--gray-100);
+    --surface-3: var(--gray-300);
+
+    /* --- Glass ---
+       Opaque enough to read as a material, translucent
+       enough that the canvas colour still shows through. */
+    --glass-bg: rgba(255, 255, 255, 0.3);
+    --glass-bg-strong: rgba(255, 255, 255, 0.44);
+    --glass-bg-faint: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-border-strong: rgba(0, 0, 0, 0.13);
+    --glass-blur: 26px;
+    /* Bevel: bright top edge, dark hairline all round, then lift. */
+    --glass-ring:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.85),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    --glass-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.05),
+        0 8px 24px -6px rgba(0, 0, 0, 0.12),
+        0 24px 48px -16px rgba(0, 0, 0, 0.14);
+
+    /* --- Lines --- */
+    --border: rgba(0, 0, 0, 0.1);
+    --border-strong: rgba(0, 0, 0, 0.18);
+    --hairline: rgba(0, 0, 0, 0.07);
+
+    /* --- Ink --- */
+    --text-primary: var(--gray-800);
+    --text-secondary: var(--gray-600);
+    --text-tertiary: var(--gray-500);
+
+    /* --- Accent: Spectrum blue in light, Spectrum yellow in dark ---
+       Adobe red stays, but only as the Acrobat section hue. Red is a
+       warning colour in Spectrum, so it is a poor fit for primary buttons. */
+    --accent: #1473e6;
+    --accent-hover: #0d66d0;
+    --accent-soft: rgba(20, 115, 230, 0.1);
+    --accent-border: rgba(20, 115, 230, 0.3);
+    --on-accent: #ffffff;
+    --danger: #d31510;
+    --danger-soft: rgba(211, 21, 16, 0.09);
+
+    /* --- Ambience tint ---
+       One cool family for the big soft backdrops behind every section — light
+       blue in light mode, a glass indigo in dark. This is deliberately NOT the
+       accent: it is something you sit inside, not something you act on. */
+    --fx-tint: #8ec8ff;
+    --fx-tint-2: #5aa9f0;
+
+    /* --- Categorical palette ---
+       For the small, close-up things: icon glyphs, card borders, the glow
+       under a card. A handful of parallel items (capability cards, skill
+       filters, contact rows) read as a set when each member gets its own hue
+       instead of an identical neutral chip repeated four times. Kept apart
+       from --accent (reserved for buttons/links) and --fx-tint (reserved for
+       whole-section backdrops) so no single colour is doing three jobs. */
+    --clr-indigo: #5b5bd6;
+    --clr-cyan: #0f7ea8;
+    --clr-magenta: #b23592;
+    --clr-orange: #c2410c;
+    --clr-green: #15803d;
+
+    /* How strongly a coloured glow reads. Dark surfaces make colour glow more
+       readily than light ones, so dark mode turns this up. */
+    --glow-strength: 1;
+
+    /* Theme baseline for section ambience. Sections scale these per-section
+       via the `intensity` prop, which is what gives the page its rhythm. */
+    --fx-base: 0.2;
+    --fx-line-base: 0.09;
+    --fx-strength: var(--fx-base);
+    --fx-line: var(--fx-line-base);
+
+    /* How dark the shadow cast onto the top of each section plate is. */
+    --plate-shade: 0.055;
+
+    /* --- Elevation --- */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.16);
+    --shadow-lg: 0 20px 44px -14px rgba(0, 0, 0, 0.24);
+
+    /* --- Radii --- */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+    --radius-xl: 30px;
+
+    /* --- Layering: one scale, no ad-hoc numbers --- */
+    --z-below: -1;
+    --z-base: 0;
+    --z-content: 1;
+    --z-raised: 10;
+    --z-sticky: 50;
+    --z-launcher: 90; /* chat button: visible over every section, everywhere */
+    /* The nav sheet is a dropdown, so the header stays above it and its own
+       toggle keeps working. The assistant is a popover, not a modal — it has
+       no scrim — so it only needs to clear the header and the nav sheet. */
+    --z-dropdown: 200; /* mobile nav sheet */
+    --z-header: 300;
+    --z-overlay: 400; /* reserved for a future dimming scrim, currently unused */
+    --z-panel: 500; /* AI assistant popover */
+    --z-toast: 600;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark {
+    /* Spectrum Darkest greys */
+    --gray-50: #080808;
+    --gray-75: #191919;
+    --gray-100: #1e1e1e;
+    --gray-200: #2c2c2c;
+    --gray-300: #393939;
+    --gray-400: #494949;
+    --gray-500: #5c5c5c;
+    --gray-600: #7c7c7c;
+    --gray-700: #a2a2a2;
+    --gray-800: #c8c8c8;
+    --gray-900: #efefef;
+
+    --bg: var(--gray-50);
+    --surface: var(--gray-100);
+    --surface-2: var(--gray-200);
+    --surface-3: var(--gray-300);
+
+    --glass-bg: rgba(58, 60, 70, 0.3);
+    --glass-bg-strong: rgba(48, 50, 60, 0.5);
+    --glass-bg-faint: rgba(74, 77, 90, 0.18);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-strong: rgba(255, 255, 255, 0.18);
+    --glass-ring:
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    --glass-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.5),
+        0 8px 26px -6px rgba(0, 0, 0, 0.6),
+        0 28px 56px -18px rgba(0, 0, 0, 0.7);
+
+    --border: rgba(255, 255, 255, 0.11);
+    --border-strong: rgba(255, 255, 255, 0.2);
+    --hairline: rgba(255, 255, 255, 0.08);
+
+    --text-primary: var(--gray-900);
+    --text-secondary: var(--gray-700);
+    --text-tertiary: var(--gray-600);
+
+    --accent: #f2d024;
+    --accent-hover: #ffe14d;
+    --accent-soft: rgba(242, 208, 36, 0.16);
+    --accent-border: rgba(242, 208, 36, 0.36);
+    /* Yellow is far too bright for white text — ink goes dark on top of it. */
+    --on-accent: #14140a;
+    --danger: #ff5c55;
+    --danger-soft: rgba(255, 92, 85, 0.15);
+
+    /* Saturated tints go neon against near-black, so dark mode runs lower. */
+    --fx-base: 0.16;
+    --fx-line-base: 0.07;
+    --fx-strength: var(--fx-base);
+    --fx-line: var(--fx-line-base);
+
+    --plate-shade: 0.4;
+
+    /* Ambience colour, deliberately NOT accent-derived. The accent (yellow)
+       is reserved for buttons, active states and focus — things you act on.
+       Ambience is something you sit inside, so it runs cool and translucent:
+       a glass blue-violet, close to the light-mode family in hue but tuned
+       for a dark canvas instead of copying the button colour onto it. */
+    --fx-tint: #7c8fff;
+    --fx-tint-2: #5f6fe0;
+
+    /* Categorical palette, lifted and desaturated slightly for a dark canvas
+       — the same hues as light mode would go muddy at that saturation here. */
+    --clr-indigo: #9694ff;
+    --clr-cyan: #52d3ff;
+    --clr-magenta: #ff86dd;
+    --clr-orange: #ffb454;
+    --clr-green: #6ee7a8;
+
+    --glow-strength: 1.6;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+    --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.75);
+    --shadow-lg: 0 24px 52px -16px rgba(0, 0, 0, 0.85);
+}
+
+@theme inline {
+    --color-bg: var(--bg);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-surface-3: var(--surface-3);
+
+    --color-glass: var(--glass-bg);
+    --color-glass-strong: var(--glass-bg-strong);
+    --color-glass-faint: var(--glass-bg-faint);
+    --color-glass-border: var(--glass-border);
+    --color-glass-border-strong: var(--glass-border-strong);
+
+    --color-border: var(--border);
+    --color-border-strong: var(--border-strong);
+    --color-hairline: var(--hairline);
+
+    --color-text-primary: var(--text-primary);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-tertiary: var(--text-tertiary);
+
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-hover);
+    --color-accent-soft: var(--accent-soft);
+    --color-accent-border: var(--accent-border);
+    --color-danger: var(--danger);
+    --color-danger-soft: var(--danger-soft);
+    --color-on-accent: var(--on-accent);
+
+    --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --font-heading: "Inter Tight", "Inter", system-ui, sans-serif;
+    --font-body: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-glass: var(--glass-shadow);
+
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-xl: var(--radius-xl);
+
+    --z-index-below: var(--z-below);
+    --z-index-base: var(--z-base);
+    --z-index-content: var(--z-content);
+    --z-index-raised: var(--z-raised);
+    --z-index-launcher: var(--z-launcher);
+    --z-index-sticky: var(--z-sticky);
+    --z-index-overlay: var(--z-overlay);
+    --z-index-dropdown: var(--z-dropdown);
+    --z-index-panel: var(--z-panel);
+    --z-index-header: var(--z-header);
+    --z-index-toast: var(--z-toast);
+}
+
+/*==================================================
+                     BASE
+==================================================*/
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Deliberately here and not on <body>: overflow on body can promote it to
+       the scroll container, which is a classic way for position:fixed children
+       to start behaving like position:absolute ones. */
+    overflow-x: hidden;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.65;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background 300ms var(--ease-out-expo), color 300ms var(--ease-out-expo);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    line-height: 1.14;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 10px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-tertiary);
+    background-clip: content-box;
+}
+
+section[id] {
+    scroll-margin-top: 110px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/*==================================================
+        GLASS
+
+    Three things make glass read, and it needs all
+    three: blur + saturation (refraction), a bright
+    inner top edge (bevel), and a drop shadow (lift).
+    A background tint alone just looks like a box.
+==================================================*/
+.glass {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur)) saturate(190%);
+    box-shadow: var(--glass-ring), var(--glass-shadow);
+}
+
+.dark .glass {
+    backdrop-filter: blur(var(--glass-blur)) saturate(190%) brightness(1.25);
+}
+
+.glass-strong {
+    background: var(--glass-bg-strong);
+    border-color: var(--glass-border-strong);
+}
+
+.glass-faint {
+    background: var(--glass-bg-faint);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px) saturate(160%);
+}
+
+/* Interactive glass: lifts and firms up on hover, and carries its colour as
+   a wash painted INSIDE the card rather than a shadow glowing outward
+   behind it — a blurred colour halo behind a stack of cards muddies fast,
+   especially where two sit close together and their glows overlap. The
+   wash sits low in the paint order (default z-index, painted before the
+   card's real children) so text and icons draw on top of it unaffected.
+   `--tint` is read with a fallback at the point of use rather than declared
+   once at the top of the rule — a real declaration here would set the
+   property on every `.glass-card` directly, which beats inheritance, so a
+   colour set once on a wrapping element (the Skills grid) would never reach
+   the cards inside it. */
+.glass-card {
+    position: relative;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(18px) saturate(180%);
+    box-shadow: var(--glass-ring), var(--shadow-md);
+    transition:
+        transform 400ms var(--ease-out-expo),
+        border-color 300ms ease,
+        box-shadow 400ms var(--ease-out-expo),
+        background 300ms ease;
+}
+
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+        120% 90% at 12% 0%,
+        color-mix(in oklab, var(--tint, var(--accent)) calc(var(--glow-strength) * 16%), transparent),
+        transparent 62%
+    );
+    opacity: 0.75;
+    transition: opacity 400ms ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    border-color: color-mix(in oklab, var(--tint, var(--accent)) 45%, var(--glass-border-strong));
+    background: var(--glass-bg-strong);
+    box-shadow: var(--glass-ring), var(--shadow-lg);
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+/* Without backdrop-filter the tint alone is unreadable, so go opaque. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+
+    .glass,
+    .glass-card,
+    .glass-faint {
+        background: var(--surface);
+    }
+}
+
+/*==================================================
+        SECTION BACKDROPS
+
+    Each section gets its own texture in its own
+    Adobe product hue, so the page reads as a
+    sequence of places — and so the glass panels
+    always have something to refract.
+==================================================*/
+.fx {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Soft off-centre bloom */
+.fx-glow::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -34%;
+    width: min(130vw, 1200px);
+    aspect-ratio: 1;
+    translate: -50% 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--fx-tint) 0%, transparent 62%);
+    opacity: var(--fx-strength);
+    filter: blur(50px);
+}
+
+/* Dot field */
+.fx-dots {
+    background-image: radial-gradient(currentColor 1.4px, transparent 1.4px);
+    background-size: 24px 24px;
+    color: var(--fx-tint);
+    opacity: calc(var(--fx-line) * 4);
+    -webkit-mask-image: radial-gradient(ellipse 72% 62% at 50% 40%, #000, transparent 100%);
+    mask-image: radial-gradient(ellipse 72% 62% at 50% 40%, #000, transparent 100%);
+}
+
+/* Blueprint grid */
+.fx-grid {
+    background-image:
+        linear-gradient(currentColor 1px, transparent 1px),
+        linear-gradient(90deg, currentColor 1px, transparent 1px);
+    background-size: 56px 56px;
+    color: var(--fx-tint);
+    opacity: calc(var(--fx-line) * 3.2);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+}
+
+/* Concentric rings, like a lens diagram */
+.fx-rings {
+    background-image: repeating-radial-gradient(circle at 50% 50%,
+            transparent 0 54px,
+            currentColor 54px 55px);
+    color: var(--fx-tint);
+    opacity: calc(var(--fx-line) * 3.4);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000, transparent 74%);
+    mask-image: radial-gradient(circle at 50% 50%, #000, transparent 74%);
+}
+
+/* Diagonal beams */
+.fx-beams {
+    background-image: repeating-linear-gradient(-45deg, currentColor 0 1px, transparent 1px 20px);
+    color: var(--fx-tint);
+    opacity: calc(var(--fx-line) * 3);
+    -webkit-mask-image: linear-gradient(to bottom right, #000, transparent 72%);
+    mask-image: linear-gradient(to bottom right, #000, transparent 72%);
+}
+
+/* Topographic contours */
+.fx-topo {
+    background-image: repeating-radial-gradient(ellipse 64% 40% at 20% 44%,
+            transparent 0 32px,
+            currentColor 32px 33px);
+    color: var(--fx-tint);
+    opacity: calc(var(--fx-line) * 3.4);
+    -webkit-mask-image: linear-gradient(to right, #000, transparent 84%);
+    mask-image: linear-gradient(to right, #000, transparent 84%);
+}
+
+/* Horizontal scanlines */
+.fx-lines {
+    background-image: repeating-linear-gradient(to bottom, currentColor 0 1px, transparent 1px 13px);
+    color: var(--fx-tint);
+    opacity: calc(var(--fx-line) * 2.6);
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent 46%, #000);
+    mask-image: linear-gradient(to bottom, #000, transparent 46%, #000);
+}
+
+/* Corner wash — two quiet gradients, nothing else */
+.fx-wash::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(72% 62% at 6% 0%, var(--fx-tint), transparent 62%),
+        radial-gradient(62% 58% at 100% 92%, var(--fx-tint), transparent 64%);
+    opacity: var(--fx-strength);
+}
+
+/* A tinted haze so glass over this section has colour to pick up. */
+.fx-haze::before {
+    content: "";
+    position: absolute;
+    inset: -25%;
+    /* Two offset pools, not one centred circle: a symmetric blob reads as a
+       vignette, whereas offset pools read as light falling across the section. */
+    background:
+        radial-gradient(42% 46% at 18% 22%, var(--fx-tint), transparent 68%),
+        radial-gradient(38% 42% at 82% 78%, var(--fx-tint-2), transparent 66%);
+    opacity: var(--fx-strength);
+    filter: blur(70px);
+}
+
+/* Film grain — kills banding where large blurs meet flat colour. */
+.fx-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dark .fx-grain::after {
+    opacity: 0.05;
+}
+
+/* Section plate: each section reads as a plane resting on the one before it —
+   a shadow cast down onto its top edge, and a light catch along its bottom.
+   This is what turns a flat scroll into a stack of surfaces. */
+.fx-plate::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 140px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, var(--plate-shade)), transparent);
+}
+
+.fx-plate::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 90px;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(255, 255, 255, calc(var(--plate-shade) * 1.4)), transparent);
+}
+
+/* Dark mode inverts the logic. A black shadow on a near-black canvas is
+   invisible — depth in a dark UI comes from where light CATCHES an edge — so
+   the top edge lightens and the bottom grounds into shadow instead. */
+.dark .fx-plate::after {
+    background: linear-gradient(to bottom, color-mix(in oklab, var(--fx-tint) 40%, white 60%), transparent);
+    opacity: 0.09;
+}
+
+.dark .fx-plate::before {
+    background: linear-gradient(to top, rgba(0, 0, 0, var(--plate-shade)), transparent);
+}
+
+/* Hairline separating one section's field from the next. */
+.fx-edge {
+    position: absolute;
+    inset-inline: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-strong), transparent);
+}
+
+/*==================================================
+        COMPONENT PRIMITIVES
+==================================================*/
+
+/* Every leading icon in the page uses this. `--tint` is inherited from
+   whatever ancestor sets it (usually the card itself, from the categorical
+   palette above — often the card is icon-chip's PARENT, not icon-chip
+   itself), so an icon, its card's border-glow and its card's top rule all
+   read as the same colour without three separate props to keep in sync.
+   Every reference below falls back to the accent only at the point of use
+   — never declared once up top — for the same reason `.glass-card` does it
+   that way: a real declaration here would win over whatever an ancestor
+   set, and inheriting the card's colour is the entire point.
+   Colour is live at rest, not just on hover — a badge that only shows its
+   colour when touched reads as grey the rest of the time, and a page full
+   of grey badges is not what a categorical palette is for. Hover only
+   deepens what is already there. */
+.icon-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid color-mix(in oklab, var(--tint, var(--accent)) 38%, var(--glass-border));
+    background: color-mix(in oklab, var(--tint, var(--accent)) 13%, transparent);
+    color: var(--tint, var(--accent));
+    box-shadow: 0 8px 18px -10px color-mix(in oklab, var(--tint, var(--accent)) calc(var(--glow-strength) * 55%), transparent);
+    transition:
+        background 300ms ease,
+        border-color 300ms ease,
+        color 300ms ease,
+        box-shadow 400ms var(--ease-out-expo),
+        transform 400ms var(--ease-out-expo);
+}
+
+.group:hover .icon-chip,
+.icon-chip:hover {
+    background: color-mix(in oklab, var(--tint, var(--accent)) 24%, transparent);
+    border-color: color-mix(in oklab, var(--tint, var(--accent)) 60%, transparent);
+    box-shadow: 0 14px 28px -10px color-mix(in oklab, var(--tint, var(--accent)) calc(var(--glow-strength) * 85%), transparent);
+    transform: translateY(-2px);
+}
+
+/* Light sweeping across a card on hover. Clipped to the card, skewed so it
+   reads as a reflection travelling over glass rather than a moving gradient. */
+.sheen {
+    position: relative;
+    overflow: hidden;
+}
+
+.sheen::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -75%;
+    width: 50%;
+    pointer-events: none;
+    transform: skewX(-22deg);
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.42),
+            transparent);
+    transition: left 750ms var(--ease-out-expo);
+}
+
+.dark .sheen::after {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.09), transparent);
+}
+
+.sheen:hover::after,
+.group:hover .sheen::after {
+    left: 130%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sheen::after {
+        display: none;
+    }
+}
+
+/* Rule that draws across a card's top edge on hover, in its `--tint` (falls
+   back to the accent, same as .icon-chip). */
+.top-rule::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--tint, var(--accent)), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 600ms var(--ease-out-expo);
+    pointer-events: none;
+}
+
+.group:hover .top-rule::before,
+.top-rule:hover::before {
+    transform: scaleX(1);
+}
+
+/* Card variant for a standalone tinted panel that isn't glass — the
+   Experience "ownership" and "build flow" callouts, for instance, which sit
+   on top of a glass card and would double up the blur if they were glass too. */
+.tint-panel {
+    border: 1px solid color-mix(in oklab, var(--tint, var(--accent)) 32%, var(--glass-border));
+    background: color-mix(in oklab, var(--tint, var(--accent)) 9%, var(--glass-bg-faint));
+}
+
+/*==================================================
+        TYPE HELPERS
+==================================================*/
+.display-serif {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.015em;
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.text-balance-tight {
+    text-wrap: balance;
+}
+
+.link-underline {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 350ms var(--ease-out-expo);
+}
+
+.link-underline:hover {
+    background-size: 100% 1px;
+}
+
+/* Chat message bubbles.
+   The user's own bubble is a solid accent block in light mode — a normal,
+   legible brand touch. In dark mode a solid saturated-yellow slab per
+   message is closer to a warning toast than a chat bubble, so it switches
+   to tinted glass instead: the accent moves to the border and the text,
+   the fill stays translucent. */
+.bubble-user {
+    background: var(--accent);
+    color: var(--on-accent);
+}
+
+.dark .bubble-user {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--accent-border);
+    color: var(--text-primary);
+    backdrop-filter: blur(16px) saturate(160%);
+}
+
+/*==================================================
+        MARQUEE
+==================================================*/
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 42s linear infinite;
+}
+
+.marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-pause:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+/*==================================================
+        ACCENT CONTRAST INVARIANT
+
+    Every `bg-accent` element must show `--on-accent` text — that pairing is
+    what keeps text legible against a background that flips from blue to a
+    near-white yellow between themes. Relying on each component to add the
+    matching text-* class by hand is exactly how that pairing drifts out of
+    sync one edit at a time. This makes it structural instead: any element
+    carrying Tailwind's `.bg-accent` utility gets legible text for free,
+    full stop, and a future button author cannot get it wrong.
+==================================================*/
+.bg-accent {
+    color: var(--on-accent);
+}
+
+/*==================================================
+        MISC ANIMATION
+==================================================*/
+@keyframes caretBlink {
+
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    50%,
+    95% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.terminal-caret {
+    animation: caretBlink 1.1s steps(1) infinite;
+}
+
+@keyframes softPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.82);
+    }
+}
+
+.soft-pulse {
+    animation: softPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes floatY {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-9px);
+    }
+}
+
+.float-y {
+    animation: floatY 6s ease-in-out infinite;
+}
+
+@keyframes hueDrift {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate3d(5%, -4%, 0) scale(1.1);
+    }
+
+    66% {
+        transform: translate3d(-4%, 3%, 0) scale(0.95);
+    }
+
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+}
+
+.hue-drift {
+    animation: hueDrift 30s ease-in-out infinite;
+}
+
+/*==================================================
+        AI ASSISTANT MARKDOWN CONTENT
+==================================================*/
+.bot-markdown strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.bot-markdown code {
+    background: var(--glass-bg-faint);
+    border: 1px solid var(--glass-border);
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--accent);
+    word-break: break-all;
+}
+
+.bot-markdown ul,
+.bot-markdown ol {
+    margin: 8px 0;
+    padding-left: 18px;
+}
+
+.bot-markdown li {
+    margin-bottom: 6px;
+    list-style-type: disc;
+}
+
+.bot-markdown li::marker {
+    color: var(--accent);
+}
+
+.bot-markdown p {
+    margin-bottom: 9px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.bot-markdown p:last-child {
+    margin-bottom: 0;
+}
+
+.bot-markdown h1,
+.bot-markdown h2,
+.bot-markdown h3 {
+    margin: 14px 0 6px 0;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+}
+
+.bot-markdown h1:first-child,
+.bot-markdown h2:first-child,
+.bot-markdown h3:first-child {
+    margin-top: 0;
+}
+
+.bot-markdown hr {
+    border: none;
+    border-top: 1px solid var(--hairline);
+    margin: 12px 0;
+}
+
+.bot-markdown a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+    word-break: break-all;
+}
+
+/* Caret trailing the text while the assistant is still writing. */
+.type-caret {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 2px;
+    translate: 0 0.14em;
+    background: var(--accent);
+    animation: caretBlink 1s steps(1) infinite;
+}
+
+/*==================================================
+        HIGHLIGHT PULSE (AI intent scroll target)
+==================================================*/
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 var(--accent-soft);
+    }
+
+    70% {
+        box-shadow: 0 0 0 18px transparent;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 transparent;
+    }
+}
+
+.highlight-pulse-active {
+    animation: pulseGlow 1.8s ease-in-out infinite;
+    border-color: var(--accent) !important;
+}
