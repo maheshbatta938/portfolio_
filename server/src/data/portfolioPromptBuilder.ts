@@ -24,7 +24,11 @@ export function buildPrompt(retrievedContext = "", userQuestion = ""): BuiltProm
     const context = retrievedContext?.trim() || "No specific details available for this topic.";
     const question = userQuestion?.trim() || "";
 
-    const userPrompt = `FACTS ABOUT MAHESH (the only facts you may use):
+    const today = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+    const userPrompt = `Today's date is ${today}. Use it to reason about anything time-relative (e.g. a past graduation year means his education is already complete, not in progress).
+
+FACTS ABOUT MAHESH (the only facts you may use):
 
 ${context}
 

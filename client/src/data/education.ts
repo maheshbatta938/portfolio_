@@ -8,6 +8,6 @@ export const education: Education = {
     endYear: 2026,
     location: "Hyderabad, Telangana",
     description:
-        "Focusing on Algorithms, Database Management, Operating Systems, Machine Learning models, and Data Analytics pipelines.",
+        "Focused on Algorithms, Database Management, Operating Systems, Machine Learning models, and Data Analytics pipelines.",
     cgpa: "7.6"
 };

@@ -61,7 +61,7 @@ class ContextService {
 - Name: Mahesh Batta
 - Current focus: ${data.profile.careerGoal}
 - Based in: ${data.profile.location}
-- Graduating: ${data.profile.graduatedYear}
+- Graduated: ${data.profile.graduatedYear} (education complete, not currently studying)
 - Email: ${data.contact.email}
 - LinkedIn: ${data.contact.linkedin}
 - GitHub: ${data.contact.github}

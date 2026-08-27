@@ -129,6 +129,7 @@
     "frontend": [
       "Angular",
       "React.js",
+      "Next.js",
       "HTML5",
       "CSS3",
       "Bootstrap",
@@ -137,6 +138,7 @@
     "backend": [
       "Node.js",
       "Express.js",
+      "NestJS",
       "REST APIs",
       "JWT Authentication",
       "Firebase Authentication"
