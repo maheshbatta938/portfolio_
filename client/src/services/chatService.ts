@@ -4,11 +4,25 @@ import type { ChatApiResponse, ChatMessage } from "../types";
 // In production, set VITE_API_BASE_URL to the deployed backend origin.
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
 
-/** Slightly above the server's own model timeout, so its fallback reply wins the race. */
-const REQUEST_TIMEOUT_MS = 20_000;
+/**
+ * Slightly above the server's own model timeout, so its fallback reply wins the race —
+ * with extra headroom because the Render free-tier backend cold-starts (30-50s) after
+ * being idle, and a short client timeout was aborting before it ever woke up.
+ */
+const REQUEST_TIMEOUT_MS = 60_000;
 
 /** Turns older than this add nothing and only cost tokens. */
 const MAX_HISTORY_SENT = 8;
+
+/**
+ * Pings the backend's health check so a Render free-tier cold start happens
+ * while the visitor is looking at the launcher/panel, not after they've sent
+ * a message and are staring at "Thinking". Fire-and-forget: failures here
+ * don't matter, the real request still has its own timeout and fallback.
+ */
+export function warmUpBackend(): void {
+    fetch(`${API_BASE_URL}/`).catch(() => {});
+}
 
 export interface AssistantAnswer {
     reply: string;

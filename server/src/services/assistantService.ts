@@ -20,7 +20,7 @@ const MAX_HISTORY_TURNS = 8;
  * the visitor watching a "Thinking" indicator forever; the rule-based reply is
  * far better than an answer that never arrives.
  */
-const MODEL_TIMEOUT_MS = 12_000;
+const MODEL_TIMEOUT_MS = 25_000;
 
 function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
     return new Promise((resolve, reject) => {

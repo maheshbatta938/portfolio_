@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import { useAIAssistant } from "../../context/AIAssistantContext";
+import { warmUpBackend } from "../../services/chatService";
 
 /**
  * Always-present chat button, bottom-right, visible over every section —
@@ -15,6 +17,12 @@ import { useAIAssistant } from "../../context/AIAssistantContext";
  */
 export default function AssistantLauncher() {
     const { isOpen, toggle } = useAIAssistant();
+
+    // Wake the Render backend as soon as the launcher mounts (page load), so
+    // a cold start finishes long before the visitor actually opens the chat.
+    useEffect(() => {
+        warmUpBackend();
+    }, []);
 
     return createPortal(
         <AnimatePresence>
