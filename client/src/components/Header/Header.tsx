@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { Menu, Sparkles, X } from "lucide-react";
+import { Menu, Search, Sparkles, X } from "lucide-react";
 import Navigation from "../Navigation/Navigation";
 import MobileMenu from "../Navigation/MobileMenu";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
@@ -68,6 +68,19 @@ export default function Header() {
                             >
                                 <i className="fa-brands fa-linkedin-in text-[15px]" aria-hidden="true" />
                             </a>
+
+                            <button
+                                type="button"
+                                onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+                                title="Open Command Menu (⌘K or Ctrl+K)"
+                                aria-label="Open Command Menu"
+                                className="glass flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[12px] text-text-tertiary transition-colors hover:text-text-primary"
+                            >
+                                <Search className="h-3.5 w-3.5" />
+                                <kbd className="hidden font-mono text-[9.5px] bg-surface-3/70 text-text-tertiary px-1.5 py-0.5 rounded border border-hairline sm:inline">
+                                    ⌘K
+                                </kbd>
+                            </button>
 
                             <ThemeToggle />
 

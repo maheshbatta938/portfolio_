@@ -6,18 +6,34 @@ interface AIAssistantContextValue {
     open: () => void;
     close: () => void;
     toggle: () => void;
+    pendingQuestion: string | null;
+    askQuestion: (question: string) => void;
+    clearPendingQuestion: () => void;
 }
 
 const AIAssistantContext = createContext<AIAssistantContextValue | undefined>(undefined);
 
 export function AIAssistantProvider({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [pendingQuestion, setPendingQuestion] = useState<string | null>(null);
 
     const open = useCallback(() => setIsOpen(true), []);
     const close = useCallback(() => setIsOpen(false), []);
     const toggle = useCallback(() => setIsOpen(prev => !prev), []);
 
-    const value = useMemo(() => ({ isOpen, open, close, toggle }), [isOpen, open, close, toggle]);
+    const askQuestion = useCallback((question: string) => {
+        setPendingQuestion(question);
+        setIsOpen(true);
+    }, []);
+
+    const clearPendingQuestion = useCallback(() => {
+        setPendingQuestion(null);
+    }, []);
+
+    const value = useMemo(
+        () => ({ isOpen, open, close, toggle, pendingQuestion, askQuestion, clearPendingQuestion }),
+        [isOpen, open, close, toggle, pendingQuestion, askQuestion, clearPendingQuestion]
+    );
 
     return <AIAssistantContext.Provider value={value}>{children}</AIAssistantContext.Provider>;
 }

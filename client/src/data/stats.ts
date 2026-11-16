@@ -8,7 +8,7 @@ const uniqueTechnologies = new Set(skills.map(s => s.name)).size;
 
 export const stats: StatItem[] = [
     { value: dsa.totalSolved, suffix: "+", label: "DSA Problems Solved" },
-    { value: experience.length, suffix: "", label: "Professional Internships" },
+    { value: experience.length, suffix: "", label: "Engineering Roles" },
     { value: projects.length, suffix: "", label: "Projects Built" },
     { value: uniqueTechnologies, suffix: "+", label: "Technologies Mastered" }
 ];

@@ -9,25 +9,25 @@ const capabilities = [
         icon: Server,
         title: "Backend engineering",
         description:
-            "RESTful microservices, JWT-guarded routes, Redis caching and Docker images — built to survive real traffic.",
+            "The same stack powering Smart Interviews' Hive platform — contest engines, evaluation forms, and MCQ pipelines for 10,000+ students.",
         tint: "cyan"
     },
     {
         icon: Layers,
         title: "System design",
-        description: "Distributed architectures, schema modelling, and modular client interfaces in Angular and React.",
+        description: "MongoDB schemas for question banks, MySQL for fintech credit workflows, Redis caching layers — designed to handle real concurrency.",
         tint: "indigo"
     },
     {
         icon: Brain,
         title: "AI & data science",
-        description: "Predictive models, data pipelines, and NLP or GenAI integrations wired into product surfaces.",
+        description: "Gemini AI portfolio assistant, XGBoost fraud detection, Bayesian A/B testing, and OpenCV pipelines — ML wired into real products.",
         tint: "magenta"
     },
     {
         icon: Code2,
         title: "Algorithmic depth",
-        description: "400+ problems solved across LeetCode and GeeksforGeeks — fundamentals that hold under pressure.",
+        description: "400+ LeetCode and GeeksforGeeks problems — the same fundamentals behind optimized API query logic and contest evaluation engines.",
         tint: "orange"
     }
 ] as const;

@@ -2,13 +2,45 @@ import type { WorkExperience } from "../types";
 
 export const experience: WorkExperience[] = [
     {
+        id: "smart-interviews",
+        role: "Software Development Engineer - 1 (SDE-1)",
+        company: "Smart Interviews",
+        location: "Hyderabad, India (Onsite)",
+        badgeInitial: "SI",
+        dateRange: "Sep 2026 - Present",
+        isCurrent: true,
+        highlights: [
+            "Engineered core platform features for 'The Hive' — Smart Interviews' flagship coding, contest, and learning platform.",
+            "Architected and delivered dynamic evaluation and feedback form systems featuring real-time single-page analytics dashboards, batch faculty filters, and duplicate-safe ingestion.",
+            "Built scalable contest pipelines including random contest generation, MCQ contest evaluation workflows, and automated problem validation tooling."
+        ],
+        moreDetails: [
+            "Implemented custom rate-limiting middleware and role-based authentication to harden backend API endpoints against high-concurrency traffic.",
+            "Designed and optimized MongoDB schemas for question banks, contest tracks, user submissions, and batch performance metrics.",
+            "Collaborated with cross-functional engineering teams using Bitbucket, Node.js, Express, and Angular for end-to-end feature delivery."
+        ],
+        tech: ["Node.js", "Express.js", "MongoDB", "Angular", "TypeScript", "REST APIs", "Rate Limiting", "Bitbucket"],
+        ownership: {
+            label: "Core Feature Ownership",
+            title: "Dynamic Evaluation & Contest Systems",
+            description:
+                "Spearheaded the architecture and full-stack implementation of assessment forms, question management, and contest tracking serving thousands of students and mentors."
+        },
+        buildFlow: {
+            label: "Platform Architecture",
+            title: "The Hive Assessment Engine",
+            items: ["Contests", "Evaluation Forms", "Leaderboards"],
+            flow: ["Angular UI", "Express APIs", "Rate Limiting", "MongoDB"]
+        }
+    },
+    {
         id: "recordent",
         role: "Software Developer Intern",
         company: "Recordent Private Limited",
         location: "Hyderabad, India",
         badgeInitial: "R",
-        dateRange: "Mar 2026 - Present",
-        isCurrent: true,
+        dateRange: "Mar 2026 - Aug 2026",
+        isCurrent: false,
         highlights: [
             "Built and enhanced full-stack features across Membership, Buyer Management, Subscription, Admin, and Credit Risk modules in a production fintech application.",
             "Designed 2 Retail and MFI Credit Risk forms with validation, REST API integration, and MySQL support for credit assessment workflows.",
@@ -26,12 +58,6 @@ export const experience: WorkExperience[] = [
             title: "Custom-domain member website",
             description:
                 "Designed and built a member-specific full-stack website end to end — responsive UI, backend integration, and member-specific data flow — owned independently on a custom domain."
-        },
-        buildFlow: {
-            label: "Currently Building",
-            title: "Website revamp — Recovery & Receivables",
-            items: ["Recovery", "Receivables"],
-            flow: ["Frontend", "REST APIs", "Business Logic", "Database"]
         }
     },
     {

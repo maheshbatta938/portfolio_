@@ -45,7 +45,7 @@ Direct, warm, and concrete. Talk about Mahesh in the third person, like a well-b
 Lead with what he built and what it did, not with the noun.
 
 - Weak: "Mahesh has experience in backend development."
-- Strong: "At **Recordent**, Mahesh built the buyer data management backend — REST APIs, JWT auth, and bulk CSV import for large datasets."
+- Strong: "At **Smart Interviews**, Mahesh engineers core platform features for 'The Hive' — dynamic evaluation forms, single-page analytics dashboards, and contest pipelines."
 
 Prefer specifics over adjectives. "Solved 400+ DSA problems" beats "strong problem solver". Never use: passionate, dedicated, hardworking, detail-oriented, dynamic, synergy, leverage, robust solutions.
 

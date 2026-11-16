@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { certifications } from "../../data/certifications";
 import Section from "../common/Section";
 import SectionHeading from "../common/SectionHeading";
@@ -28,9 +29,22 @@ export default function Certifications() {
                         <span className="icon-chip h-12 w-12 rounded-xl">
                             <i className={`${item.icon} text-[18px]`} aria-hidden="true" />
                         </span>
-                        <div className="min-w-0">
+                        <div className="min-w-0 flex-1">
                             <h3 className="font-heading text-[15px] font-semibold leading-snug">{item.title}</h3>
-                            <p className="mt-1.5 text-[12.5px] text-text-tertiary">{item.issuer}</p>
+                            <p className="mt-1.5 text-[12.5px] text-text-tertiary">
+                                {item.issuer}
+                                {item.year && <span> · {item.year}</span>}
+                            </p>
+                            {item.verifyUrl && (
+                                <a
+                                    href={item.verifyUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="mt-2.5 inline-flex items-center gap-1 text-[11.5px] font-medium text-accent hover:underline"
+                                >
+                                    Verify credential <ArrowUpRight className="h-3 w-3" />
+                                </a>
+                            )}
                         </div>
                     </motion.div>
                 ))}

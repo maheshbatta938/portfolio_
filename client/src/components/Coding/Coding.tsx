@@ -16,13 +16,45 @@ export default function Coding() {
 
             <BlurReveal className="glass grid grid-cols-1 overflow-hidden rounded-[26px] lg:grid-cols-[0.85fr_1.15fr]">
                 <div className="flex flex-col justify-center gap-5 border-b border-hairline p-8 md:p-10 lg:border-b-0 lg:border-r">
-                    <p className="font-heading text-[clamp(3rem,7vw,4.6rem)] font-semibold leading-none tracking-tight">
-                        {dsa.totalSolved}
-                        <span className="text-accent">+</span>
-                    </p>
-                    <p className="max-w-[280px] text-[14.5px] leading-relaxed text-text-secondary">
-                        Problems solved across LeetCode and GeeksforGeeks.
-                    </p>
+                    <div>
+                        <p className="font-heading text-[clamp(3rem,7vw,4.6rem)] font-semibold leading-none tracking-tight">
+                            {dsa.totalSolved}
+                            <span className="text-accent">+</span>
+                        </p>
+                        <p className="mt-2 max-w-[280px] text-[14.5px] leading-relaxed text-text-secondary">
+                            Problems solved across LeetCode and GeeksforGeeks.
+                        </p>
+                    </div>
+
+                    {dsa.breakdown && (
+                        <div className="grid grid-cols-3 gap-2 rounded-2xl border border-glass-border bg-glass-faint p-3 text-center">
+                            <div className="flex flex-col items-center">
+                                <span className="font-heading text-[18px] font-bold text-emerald-600 dark:text-emerald-400">
+                                    {dsa.breakdown.easy}
+                                </span>
+                                <span className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider">
+                                    Easy
+                                </span>
+                            </div>
+                            <div className="flex flex-col items-center border-x border-hairline">
+                                <span className="font-heading text-[18px] font-bold text-amber-600 dark:text-amber-400">
+                                    {dsa.breakdown.medium}
+                                </span>
+                                <span className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider">
+                                    Medium
+                                </span>
+                            </div>
+                            <div className="flex flex-col items-center">
+                                <span className="font-heading text-[18px] font-bold text-rose-600 dark:text-rose-400">
+                                    {dsa.breakdown.hard}
+                                </span>
+                                <span className="text-[11px] font-medium text-text-tertiary uppercase tracking-wider">
+                                    Hard
+                                </span>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="flex flex-wrap gap-2">
                         {dsa.links.map(link => (
                             <a

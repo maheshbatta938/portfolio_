@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { ChangeEvent, FormEvent } from "react";
-import { ArrowUpRight, Check, CheckCircle2, Loader2, Mail, MapPin, Phone, Send } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight, Check, CheckCircle2, Clock, Loader2, Mail, MapPin, Phone, Send, Sparkles } from "lucide-react";
 import { contact, CONTACT_FORM_ENDPOINT } from "../../data/contact";
 import { useToast } from "../../context/ToastContext";
 import Section from "../common/Section";
@@ -18,8 +19,40 @@ const labelClass =
 export default function Contact() {
     const { showToast } = useToast();
     const [submitState, setSubmitState] = useState<SubmitState>("idle");
+    const [submitted, setSubmitted] = useState(false);
+    const [submittedName, setSubmittedName] = useState("");
     const [copied, setCopied] = useState(false);
     const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+    const [currentTime, setCurrentTime] = useState("");
+    const [isWorkingHours, setIsWorkingHours] = useState(true);
+
+    useEffect(() => {
+        const updateTime = () => {
+            const now = new Date();
+            const istTime = new Intl.DateTimeFormat("en-US", {
+                timeZone: "Asia/Kolkata",
+                hour: "numeric",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true
+            }).format(now);
+            setCurrentTime(istTime);
+
+            const hourIST = parseInt(
+                new Intl.DateTimeFormat("en-US", {
+                    timeZone: "Asia/Kolkata",
+                    hour: "numeric",
+                    hour12: false
+                }).format(now),
+                10
+            );
+            setIsWorkingHours(hourIST >= 9 && hourIST < 19);
+        };
+
+        updateTime();
+        const interval = setInterval(updateTime, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleChange = (field: keyof typeof form) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm(prev => ({ ...prev, [field]: e.target.value }));
@@ -53,6 +86,8 @@ export default function Contact() {
             });
 
             if (response.ok) {
+                setSubmittedName(form.name);
+                setSubmitted(true);
                 showToast("Message sent successfully");
                 setForm({ name: "", email: "", subject: "", message: "" });
             } else {
@@ -77,6 +112,13 @@ export default function Contact() {
         },
         { icon: Phone, label: "Phone", value: contact.phone, tint: "cyan" as const },
         { icon: MapPin, label: "Location", value: contact.location, tint: "green" as const },
+        {
+            icon: Clock,
+            label: "Local Time (IST / UTC+5:30)",
+            value: `${currentTime || "03:30 PM"} · ${isWorkingHours ? "Active / Working Hours" : "After Hours"}`,
+            tint: "orange" as const,
+            pulseColor: isWorkingHours ? "bg-emerald-500" : "bg-indigo-400"
+        },
         {
             icon: CheckCircle2,
             label: "Status",
@@ -107,7 +149,12 @@ export default function Contact() {
                                     </span>
                                     <span className="min-w-0 flex-1">
                                         <span className="eyebrow block text-text-tertiary">{row.label}</span>
-                                        <span className="mt-1 block truncate text-[14.5px] font-medium text-text-primary">
+                                        <span className="mt-1 flex items-center gap-2 truncate text-[14.5px] font-medium text-text-primary">
+                                            {"pulseColor" in row && (
+                                                <span
+                                                    className={`soft-pulse h-2 w-2 rounded-full flex-shrink-0 ${row.pulseColor}`}
+                                                />
+                                            )}
                                             {row.value}
                                         </span>
                                     </span>
@@ -161,93 +208,127 @@ export default function Contact() {
                     </div>
                 </div>
 
-                {/* ---------------- Form ---------------- */}
-                <form
-                    onSubmit={handleSubmit}
-                    className="glass flex flex-col gap-2.5 rounded-[26px] p-5 transition-shadow duration-300 focus-within:shadow-lg md:p-6"
-                >
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <div className="relative">
-                            <input
-                                id="formName"
-                                value={form.name}
-                                onChange={handleChange("name")}
-                                required
-                                minLength={3}
-                                placeholder=" "
-                                className={fieldClass}
-                            />
-                            <label htmlFor="formName" className={labelClass}>
-                                Your name
-                            </label>
-                        </div>
-
-                        <div className="relative">
-                            <input
-                                id="formEmail"
-                                type="email"
-                                value={form.email}
-                                onChange={handleChange("email")}
-                                required
-                                placeholder=" "
-                                className={fieldClass}
-                            />
-                            <label htmlFor="formEmail" className={labelClass}>
-                                Email address
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="relative">
-                        <input
-                            id="formSubject"
-                            value={form.subject}
-                            onChange={handleChange("subject")}
-                            required
-                            minLength={3}
-                            placeholder=" "
-                            className={fieldClass}
-                        />
-                        <label htmlFor="formSubject" className={labelClass}>
-                            Subject
-                        </label>
-                    </div>
-
-                    <div className="relative">
-                        <textarea
-                            id="formMessage"
-                            value={form.message}
-                            onChange={handleChange("message")}
-                            required
-                            minLength={5}
-                            rows={4}
-                            placeholder=" "
-                            className={`${fieldClass} resize-none`}
-                        />
-                        <label
-                            htmlFor="formMessage"
-                            className="pointer-events-none absolute left-4 top-2 text-[10.5px] font-medium uppercase tracking-[0.12em] text-text-tertiary transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-[13.5px] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-2 peer-focus:text-[10.5px] peer-focus:uppercase peer-focus:tracking-[0.12em] peer-focus:text-accent"
+                {/* ---------------- Form or Success State ---------------- */}
+                <AnimatePresence mode="wait">
+                    {submitted ? (
+                        <motion.div
+                            key="success-card"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                            className="glass flex flex-col items-center justify-center rounded-[26px] p-8 text-center md:p-10"
                         >
-                            Write your message
-                        </label>
-                    </div>
+                            <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-500 mb-5 border border-emerald-500/20">
+                                <CheckCircle2 className="h-8 w-8" />
+                            </span>
+                            <h3 className="font-heading text-[22px] font-semibold text-text-primary">
+                                Message sent successfully!
+                            </h3>
+                            <p className="mt-2 text-[14.5px] text-text-secondary max-w-[360px] leading-relaxed">
+                                Thanks {submittedName ? `for reaching out, ${submittedName}` : "for reaching out"}. I received your note and will get back to you within 24 hours.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => setSubmitted(false)}
+                                className="mt-8 inline-flex items-center gap-2 rounded-full border border-glass-border bg-glass-faint px-5 py-2.5 font-heading text-[13px] font-semibold text-text-primary transition-all duration-300 hover:border-accent-border hover:text-accent"
+                            >
+                                <Sparkles className="h-3.5 w-3.5" /> Send another message
+                            </button>
+                        </motion.div>
+                    ) : (
+                        <motion.form
+                            key="contact-form"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onSubmit={handleSubmit}
+                            className="glass flex flex-col gap-2.5 rounded-[26px] p-5 transition-shadow duration-300 focus-within:shadow-lg md:p-6"
+                        >
+                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                <div className="relative">
+                                    <input
+                                        id="formName"
+                                        value={form.name}
+                                        onChange={handleChange("name")}
+                                        required
+                                        minLength={3}
+                                        placeholder=" "
+                                        className={fieldClass}
+                                    />
+                                    <label htmlFor="formName" className={labelClass}>
+                                        Your name
+                                    </label>
+                                </div>
 
-                    <button
-                        type="submit"
-                        disabled={submitState === "sending"}
-                        className="mt-0.5 flex w-full items-center justify-center gap-2.5 rounded-xl bg-accent py-3.5 font-heading text-[14px] font-semibold text-on-accent transition-all duration-300 hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-60"
-                    >
-                        {submitState === "sending" ? (
-                            <>
-                                <Loader2 className="h-4 w-4 animate-spin" /> Sending
-                            </>
-                        ) : (
-                            <>
-                                Send message <Send className="h-4 w-4" />
-                            </>
-                        )}
-                    </button>
-                </form>
+                                <div className="relative">
+                                    <input
+                                        id="formEmail"
+                                        type="email"
+                                        value={form.email}
+                                        onChange={handleChange("email")}
+                                        required
+                                        placeholder=" "
+                                        className={fieldClass}
+                                    />
+                                    <label htmlFor="formEmail" className={labelClass}>
+                                        Email address
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="relative">
+                                <input
+                                    id="formSubject"
+                                    value={form.subject}
+                                    onChange={handleChange("subject")}
+                                    required
+                                    minLength={3}
+                                    placeholder=" "
+                                    className={fieldClass}
+                                />
+                                <label htmlFor="formSubject" className={labelClass}>
+                                    Subject
+                                </label>
+                            </div>
+
+                            <div className="relative">
+                                <textarea
+                                    id="formMessage"
+                                    value={form.message}
+                                    onChange={handleChange("message")}
+                                    required
+                                    minLength={5}
+                                    rows={4}
+                                    placeholder=" "
+                                    className={`${fieldClass} resize-none`}
+                                />
+                                <label
+                                    htmlFor="formMessage"
+                                    className="pointer-events-none absolute left-4 top-2 text-[10.5px] font-medium uppercase tracking-[0.12em] text-text-tertiary transition-all duration-300 peer-placeholder-shown:top-4 peer-placeholder-shown:text-[13.5px] peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-2 peer-focus:text-[10.5px] peer-focus:uppercase peer-focus:tracking-[0.12em] peer-focus:text-accent"
+                                >
+                                    Write your message
+                                </label>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={submitState === "sending"}
+                                className="mt-0.5 flex w-full items-center justify-center gap-2.5 rounded-xl bg-accent py-3.5 font-heading text-[14px] font-semibold text-on-accent transition-all duration-300 hover:bg-accent-hover disabled:pointer-events-none disabled:opacity-60"
+                            >
+                                {submitState === "sending" ? (
+                                    <>
+                                        <Loader2 className="h-4 w-4 animate-spin" /> Sending
+                                    </>
+                                ) : (
+                                    <>
+                                        Send message <Send className="h-4 w-4" />
+                                    </>
+                                )}
+                            </button>
+                        </motion.form>
+                    )}
+                </AnimatePresence>
             </div>
         </Section>
     );

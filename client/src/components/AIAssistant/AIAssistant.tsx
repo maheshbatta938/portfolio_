@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDown, Braces, Code2, FolderGit2, GraduationCap, Send, Sparkles, Trash2, X } from "lucide-react";
+import { ArrowDown, Braces, ClipboardList, Code2, FolderGit2, GraduationCap, Send, Sparkles, Trash2, X } from "lucide-react";
 import { useAIAssistant } from "../../context/AIAssistantContext";
 import { useChatHistory } from "../../hooks/useChatHistory";
 import { askPortfolioAI } from "../../services/chatService";
@@ -27,12 +27,38 @@ const STARTERS = [
     { label: "Education", hint: "Degree and grades", icon: GraduationCap, question: "What did he study, and where?" }
 ];
 
+/** Seeded shuffle — same order for the whole day, different each day. */
+function seededShuffle<T>(arr: T[], seed: number): T[] {
+    const a = [...arr];
+    let s = seed;
+    for (let i = a.length - 1; i > 0; i--) {
+        s = (s * 1664525 + 1013904223) & 0xffffffff;
+        const j = Math.abs(s) % (i + 1);
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+/** Derive suggested follow-up chips from the returned intent string. */
+function getFollowups(intent: string): string[] {
+    if (intent.includes("project"))
+        return ["Tell me more about NovaBank", "Any live demo?", "Show his GitHub"];
+    if (intent.includes("education"))
+        return ["What GPA did he achieve?", "Any certifications?"];
+    if (intent.includes("experience"))
+        return ["What tech did he use?", "What is he building now?"];
+    if (intent.includes("skills"))
+        return ["How strong is his backend?", "Any AI experience?"];
+    return ["What projects did he build?", "How can I reach him?", "What is his tech stack?"];
+}
+
 export default function AIAssistant() {
-    const { isOpen, close } = useAIAssistant();
+    const { isOpen, close, pendingQuestion, clearPendingQuestion } = useAIAssistant();
     const { messages, addMessage, clearMessages } = useChatHistory();
     const [input, setInput] = useState("");
     const [isThinking, setIsThinking] = useState(false);
     const [showScrollDown, setShowScrollDown] = useState(false);
+    const [confirmClear, setConfirmClear] = useState(false);
     // Only the reply that just landed types itself out; restored history does not.
     const [typingId, setTypingId] = useState<string | null>(null);
 
@@ -40,6 +66,13 @@ export default function AIAssistant() {
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const messageIdCounter = useRef(0);
     const nextMessageId = (prefix: string) => `${prefix}-${(messageIdCounter.current += 1)}`;
+
+    /** Shuffled starters — same order all day, rotates each day. */
+    const shuffledStarters = useMemo(
+        () => seededShuffle(STARTERS, new Date().getDay()).slice(0, 4),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    );
 
     useEffect(() => {
         if (!isOpen) return;
@@ -88,12 +121,22 @@ export default function AIAssistant() {
             id: botId,
             sender: "bot",
             text: result.reply,
-            origin: result.isError ? "error" : result.isFallback ? "fallback" : "model"
+            origin: result.isError ? "error" : result.isFallback ? "fallback" : "model",
+            suggestedFollowups: result.suggestedFollowups ?? getFollowups(result.intent)
         });
         setTypingId(botId);
         setIsThinking(false);
         handleIntentAction(result.intent);
     };
+
+    useEffect(() => {
+        if (isOpen && pendingQuestion) {
+            const questionToSend = pendingQuestion;
+            clearPendingQuestion();
+            void sendMessage(questionToSend);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen, pendingQuestion]);
 
     const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && !e.shiftKey) {
@@ -103,10 +146,30 @@ export default function AIAssistant() {
     };
 
     const handleClear = () => {
-        if (window.confirm("Clear this conversation?")) {
-            clearMessages();
-            setTypingId(null);
+        setConfirmClear(true);
+    };
+
+    const confirmAndClear = () => {
+        clearMessages();
+        setTypingId(null);
+        setConfirmClear(false);
+    };
+
+    const handleCopyConversation = () => {
+        const lines: string[] = [];
+        for (let i = 0; i < messages.length; i++) {
+            const m = messages[i];
+            if (m.sender === "user") {
+                lines.push(`User: ${m.text}`);
+            } else {
+                lines.push(`Mahesh AI: ${m.text}`);
+                // blank line after each pair (or standalone bot msg)
+                if (i === messages.length - 1 || messages[i + 1]?.sender === "user") {
+                    lines.push("");
+                }
+            }
         }
+        navigator.clipboard.writeText(lines.join("\n")).catch(() => undefined);
     };
 
     const canSend = Boolean(input.trim()) && !isThinking;
@@ -148,7 +211,7 @@ export default function AIAssistant() {
                             position: "fixed",
                             transformOrigin: "bottom right"
                         }}
-                        className="glass glass-strong inset-x-4 bottom-[88px] z-panel flex h-[min(74vh,600px)] flex-col overflow-hidden rounded-[24px] rounded-br-[6px] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:left-auto sm:h-[min(620px,calc(100vh-104px))] sm:w-[400px]"
+                        className="glass glass-strong inset-x-4 bottom-[88px] z-panel flex h-[min(74vh,600px)] flex-col overflow-hidden rounded-[24px] rounded-br-[6px] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:left-auto sm:h-[min(620px,calc(100vh-104px))] sm:w-[460px]"
                     >
                         {/* ---------------- Header ---------------- */}
                         <header className="flex flex-shrink-0 items-center justify-between gap-3 border-b border-hairline px-4 py-3.5">
@@ -169,15 +232,26 @@ export default function AIAssistant() {
 
                             <div className="flex flex-shrink-0 items-center gap-1">
                                 {messages.length > 0 && (
-                                    <button
-                                        type="button"
-                                        onClick={handleClear}
-                                        title="Clear conversation"
-                                        aria-label="Clear conversation"
-                                        className="flex h-8 w-8 items-center justify-center rounded-lg text-text-tertiary transition-colors hover:bg-danger-soft hover:text-danger"
-                                    >
-                                        <Trash2 className="h-3.5 w-3.5" />
-                                    </button>
+                                    <>
+                                        <button
+                                            type="button"
+                                            onClick={handleCopyConversation}
+                                            title="Copy conversation"
+                                            aria-label="Copy conversation"
+                                            className="flex h-8 w-8 items-center justify-center rounded-lg text-text-tertiary transition-colors hover:bg-glass-faint hover:text-text-primary"
+                                        >
+                                            <ClipboardList className="h-3.5 w-3.5" />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={handleClear}
+                                            title="Clear conversation"
+                                            aria-label="Clear conversation"
+                                            className="flex h-8 w-8 items-center justify-center rounded-lg text-text-tertiary transition-colors hover:bg-danger-soft hover:text-danger"
+                                        >
+                                            <Trash2 className="h-3.5 w-3.5" />
+                                        </button>
+                                    </>
                                 )}
                                 <button
                                     type="button"
@@ -189,6 +263,38 @@ export default function AIAssistant() {
                                 </button>
                             </div>
                         </header>
+
+                        {/* ---------------- Inline clear confirmation ---------------- */}
+                        <AnimatePresence>
+                            {confirmClear && (
+                                <motion.div
+                                    key="confirm-clear"
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="flex flex-shrink-0 items-center justify-between gap-3 overflow-hidden border-b border-hairline bg-danger-soft px-4 py-2.5"
+                                >
+                                    <span className="text-[12.5px] font-medium text-danger">Clear chat?</span>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setConfirmClear(false)}
+                                            className="rounded-lg px-3 py-1 text-[12px] font-medium text-text-secondary transition-colors hover:bg-glass-faint"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={confirmAndClear}
+                                            className="rounded-lg bg-danger px-3 py-1 text-[12px] font-medium text-white transition-opacity hover:opacity-90"
+                                        >
+                                            Yes, clear
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* ---------------- Transcript ---------------- */}
                         <div className="relative flex min-h-0 flex-1 flex-col">
@@ -207,7 +313,7 @@ export default function AIAssistant() {
 
                                 {messages.length === 0 && (
                                     <div className="mt-1 grid gap-2">
-                                        {STARTERS.map((item, i) => (
+                                        {shuffledStarters.map((item, i) => (
                                             <motion.button
                                                 key={item.label}
                                                 type="button"
@@ -233,13 +339,44 @@ export default function AIAssistant() {
                                     </div>
                                 )}
 
-                                {messages.map(message => (
-                                    <ChatBubble
-                                        key={message.id}
-                                        message={message}
-                                        typeOut={message.id === typingId}
-                                    />
-                                ))}
+                                {messages.map((message, index) => {
+                                    const isLast = index === messages.length - 1;
+                                    const isBot = message.sender === "bot";
+                                    const showFollowups =
+                                        isLast &&
+                                        isBot &&
+                                        !isThinking &&
+                                        message.suggestedFollowups &&
+                                        message.suggestedFollowups.length > 0;
+
+                                    return (
+                                        <div key={message.id} className="flex flex-col gap-2">
+                                            <ChatBubble
+                                                message={message}
+                                                typeOut={message.id === typingId}
+                                            />
+                                            {showFollowups && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: 6 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ delay: 0.2, duration: 0.3 }}
+                                                    className="flex flex-wrap gap-1.5 pl-1 pt-1"
+                                                >
+                                                    {message.suggestedFollowups!.map(chip => (
+                                                        <button
+                                                            key={chip}
+                                                            type="button"
+                                                            onClick={() => void sendMessage(chip)}
+                                                            className="rounded-full border border-glass-border bg-glass-faint px-3 py-1 text-[11.5px] font-medium text-text-secondary transition-all duration-200 hover:border-accent-border hover:bg-accent-soft hover:text-accent cursor-pointer"
+                                                        >
+                                                            {chip}
+                                                        </button>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </div>
+                                    );
+                                })}
 
                                 {isThinking && (
                                     <div className="glass flex items-center gap-2.5 self-start rounded-2xl rounded-bl-md px-4 py-3">

@@ -3,22 +3,22 @@ import type { Profile } from "../types";
 export const profile: Profile = {
     fullName: "Mahesh Batta",
     firstName: "Mahesh",
-    currentRole: "Software Developer Intern",
-    careerGoal: "Software Engineer",
+    currentRole: "SDE-1",
+    careerGoal: "Software Development Engineer",
     location: "Hyderabad, Telangana, India",
     graduatedYear: 2026,
     availability: "Available for opportunities",
-    tagline: "Full-Stack Software Developer",
+    tagline: "SDE-1 at Smart Interviews | Full-Stack & Backend Engineer",
     intro:
-        "Software Engineer building scalable enterprise applications, robust backend systems, and AI-powered solutions across the full stack.",
+        "Software Development Engineer at Smart Interviews building high-scale assessment systems, robust backend architectures, dynamic analytics dashboards, and AI-powered tools.",
     typingRoles: [
-        "Software Engineer",
+        "SDE-1 @ Smart Interviews",
+        "Software Development Engineer",
         "Full Stack Developer",
         "Backend Engineer",
-        "AI/ML Developer",
-        "Problem Solver"
+        "DSA & Problem Solver"
     ],
-    heroTech: ["Angular", "React", "Node.js", "Express.js", "MySQL", "MongoDB"],
+    heroTech: ["Node.js", "Express.js", "MongoDB", "Angular", "React", "MySQL", "TypeScript"],
     resumeUrl: "/assets/images/BattaMahesh.pdf",
     photoUrl: "/assets/images/maheshbatta.png"
 };

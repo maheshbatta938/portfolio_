@@ -134,4 +134,5 @@ export interface AssistantReply {
     replyText: string;
     intent: string;
     isFallback: boolean;
+    suggestedFollowups?: string[];
 }

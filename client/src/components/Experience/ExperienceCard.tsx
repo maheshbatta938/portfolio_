@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Sparkles, Wrench } from "lucide-react";
 import type { WorkExperience } from "../../types";
-import { tint } from "../../lib/tints";
+import { useAIAssistant } from "../../context/AIAssistantContext";
 
 function Bullet({ text }: { text: string }) {
     return (
@@ -15,6 +15,7 @@ function Bullet({ text }: { text: string }) {
 
 export default function ExperienceCard({ job, index }: { job: WorkExperience; index: number }) {
     const [expanded, setExpanded] = useState(false);
+    const { askQuestion } = useAIAssistant();
 
     return (
         <motion.article
@@ -37,6 +38,16 @@ export default function ExperienceCard({ job, index }: { job: WorkExperience; in
                     }`}
                 />
             </span>
+
+            {/* Mobile-only "Current" timeline indicator */}
+            {job.isCurrent && (
+                <div className="flex items-center gap-2 mb-3 md:hidden">
+                    <span className="soft-pulse h-2 w-2 rounded-full bg-accent flex-shrink-0" aria-hidden="true" />
+                    <span className="flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider text-accent">
+                        Current
+                    </span>
+                </div>
+            )}
 
             <div
                 className={`glass rounded-[24px] p-6 md:p-8 ${
@@ -64,12 +75,26 @@ export default function ExperienceCard({ job, index }: { job: WorkExperience; in
                     </div>
 
                     <div className="flex flex-col items-start gap-2 sm:items-end">
-                        {job.isCurrent && (
-                            <span className="flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider text-accent">
-                                <span className="soft-pulse h-1.5 w-1.5 rounded-full bg-accent" />
-                                Current
-                            </span>
-                        )}
+                        <div className="flex items-center gap-2">
+                            {job.isCurrent && (
+                                <span className="flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-1 text-[10.5px] font-semibold uppercase tracking-wider text-accent">
+                                    <span className="soft-pulse h-1.5 w-1.5 rounded-full bg-accent" />
+                                    Current
+                                </span>
+                            )}
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    askQuestion(
+                                        `Tell me about Mahesh's work, tech stack, and key impact as ${job.role} at ${job.company}.`
+                                    )
+                                }
+                                title="Ask AI about this role"
+                                className="inline-flex items-center gap-1 rounded-full border border-glass-border bg-glass-faint px-2.5 py-1 text-[10.5px] font-medium text-text-tertiary transition-colors hover:border-accent-border hover:text-accent cursor-pointer"
+                            >
+                                <Sparkles className="h-3 w-3 text-accent" /> Ask AI
+                            </button>
+                        </div>
                         <span className="eyebrow whitespace-nowrap text-text-tertiary">{job.dateRange}</span>
                     </div>
                 </header>

@@ -9,5 +9,13 @@ export const education: Education = {
     location: "Hyderabad, Telangana",
     description:
         "Focused on Algorithms, Database Management, Operating Systems, Machine Learning models, and Data Analytics pipelines.",
-    cgpa: "7.6"
+    cgpa: "7.6",
+    coursework: [
+        "Data Structures & Algorithms",
+        "Database Management Systems",
+        "Operating Systems",
+        "Computer Networks",
+        "Machine Learning",
+        "Object-Oriented Programming (Java/C++)"
+    ]
 };

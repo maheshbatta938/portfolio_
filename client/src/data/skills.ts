@@ -1,65 +1,105 @@
-import type { SkillFilter, SkillItem } from "../types";
+import type { SkillFilter, SkillItem, SkillMatrixRow } from "../types";
 
 export const skillFilters: SkillFilter[] = [
-    { id: "all", label: "All" },
+    { id: "all", label: "All Domains" },
     { id: "languages", label: "Languages" },
+    { id: "backend", label: "Backend & Systems" },
     { id: "frontend", label: "Frontend" },
-    { id: "backend", label: "Backend" },
-    { id: "database-devops", label: "Databases & DevOps" },
+    { id: "database-devops", label: "Databases & Cloud" },
     { id: "ai-ml", label: "AI & Data Science" }
+];
+
+export const skillMatrix: SkillMatrixRow[] = [
+    {
+        id: "languages",
+        category: "languages",
+        domain: "Programming Languages",
+        description: "Core languages for systems, algorithms, and full-stack development",
+        proficiency: "Production / Core",
+        technologies: ["JavaScript (ES6+)", "TypeScript", "Python", "Java", "SQL"],
+        appliedIn: "High-concurrency services, algorithmic contest tools, data pipelines, and responsive web applications"
+    },
+    {
+        id: "backend-core",
+        category: "backend",
+        domain: "Backend & Distributed Systems",
+        description: "Scalable server architectures, microservices, and secure APIs",
+        proficiency: "Production / Core",
+        technologies: ["Node.js", "Express.js", "NestJS", "RESTful APIs", "JWT", "RBAC", "Rate Limiting Middleware"],
+        appliedIn: "Contest evaluation engines, dynamic feedback dashboards, rate-limiting layers, and financial transaction workflows"
+    },
+    {
+        id: "frontend-arch",
+        category: "frontend",
+        domain: "Frontend Architecture",
+        description: "Component systems, state management, and modern client performance",
+        proficiency: "Advanced",
+        technologies: ["Angular (14-16+)", "React.js", "Next.js", "TypeScript", "Tailwind CSS", "Bootstrap 5", "HTML5/CSS3"],
+        appliedIn: "Interactive assessment interfaces, multi-step dynamic forms, single-page analytics dashboards, and member portals"
+    },
+    {
+        id: "data-cloud",
+        category: "database-devops",
+        domain: "Databases & Cloud DevOps",
+        description: "Data modeling, caching, CI/CD pipelines, and containerization",
+        proficiency: "Advanced",
+        technologies: ["MongoDB", "MySQL", "Redis", "Docker", "Git", "GitHub", "Bitbucket", "Azure", "AWS", "Postman", "Swagger"],
+        appliedIn: "Optimized relational queries, document schemas for question banks, Redis caching, and automated deployment merges"
+    },
+    {
+        id: "ai-ds",
+        category: "ai-ml",
+        domain: "AI & Data Science",
+        description: "Machine learning models, GenAI agents, and analytical processing",
+        proficiency: "Proficient",
+        technologies: ["Scikit-Learn", "TensorFlow", "Pandas", "NumPy", "OpenCV", "LLMs", "RAG", "Agentic AI", "Prompt Engineering"],
+        appliedIn: "Predictive modeling, data classification pipelines, intelligent portfolio assistant integration, and problem validation tooling"
+    }
 ];
 
 export const skills: SkillItem[] = [
     // Languages
-    { name: "Java", iconClass: "devicon-java-plain colored", category: "languages" },
-    { name: "Python", iconClass: "devicon-python-plain colored", category: "languages" },
-    { name: "JavaScript", iconClass: "devicon-javascript-plain colored", category: "languages" },
-    { name: "TypeScript", iconClass: "devicon-typescript-plain colored", category: "languages" },
-
-    // Frontend
-    { name: "Angular", iconClass: "devicon-angularjs-plain colored", category: "frontend" },
-    { name: "React", iconClass: "devicon-react-original colored", category: "frontend" },
-    { name: "HTML5", iconClass: "devicon-html5-plain colored", category: "frontend" },
-    { name: "CSS3", iconClass: "devicon-css3-plain colored", category: "frontend" },
-    { name: "Bootstrap", iconClass: "devicon-bootstrap-plain colored", category: "frontend" },
-    { name: "Next.js", iconClass: "devicon-nextjs-plain colored", category: "frontend" },
+    { name: "JavaScript", category: "languages" },
+    { name: "TypeScript", category: "languages" },
+    { name: "Python", category: "languages" },
+    { name: "Java", category: "languages" },
+    { name: "SQL", category: "languages" },
 
     // Backend
-    { name: "Node.js", iconClass: "devicon-nodejs-plain colored", category: "backend" },
-    { name: "Express.js", iconClass: "devicon-express-original", category: "backend" },
-    { name: "NestJS", iconClass: "devicon-nestjs-plain colored", category: "backend" },
-    { name: "RBAC", iconClass: "fa-solid fa-user-shield", category: "backend" },
+    { name: "Node.js", category: "backend" },
+    { name: "Express.js", category: "backend" },
+    { name: "NestJS", category: "backend" },
+    { name: "RESTful APIs", category: "backend" },
+    { name: "JWT Auth", category: "backend" },
+    { name: "RBAC", category: "backend" },
+    { name: "Rate Limiting", category: "backend" },
+
+    // Frontend
+    { name: "Angular", category: "frontend" },
+    { name: "React", category: "frontend" },
+    { name: "Next.js", category: "frontend" },
+    { name: "Tailwind CSS", category: "frontend" },
+    { name: "Bootstrap 5", category: "frontend" },
+    { name: "HTML5 & CSS3", category: "frontend" },
 
     // Databases & DevOps
-    { name: "MySQL", iconClass: "devicon-mysql-plain colored", category: "database-devops" },
-    { name: "MongoDB", iconClass: "devicon-mongodb-plain colored", category: "database-devops" },
-    { name: "Redis", iconClass: "devicon-redis-plain colored", category: "database-devops" },
-    { name: "Docker", iconClass: "devicon-docker-plain colored", category: "database-devops" },
-    { name: "Git", iconClass: "devicon-git-plain colored", category: "database-devops" },
-    { name: "GitHub", iconClass: "devicon-github-original", category: "database-devops" },
-    { name: "Azure", iconClass: "devicon-azure-plain colored", category: "database-devops" },
-    { name: "AWS", iconClass: "devicon-amazonwebservices-original colored", category: "database-devops" },
-    { name: "Postman", iconClass: "devicon-postman-plain colored", category: "database-devops" },
-    { name: "Swagger", iconClass: "devicon-swagger-plain colored", category: "database-devops" },
-    { name: "Figma", iconClass: "devicon-figma-plain colored", category: "database-devops" },
+    { name: "MongoDB", category: "database-devops" },
+    { name: "MySQL", category: "database-devops" },
+    { name: "Redis", category: "database-devops" },
+    { name: "Docker", category: "database-devops" },
+    { name: "Git & Bitbucket", category: "database-devops" },
+    { name: "GitHub", category: "database-devops" },
+    { name: "Postman", category: "database-devops" },
+    { name: "Swagger", category: "database-devops" },
+    { name: "AWS & Azure", category: "database-devops" },
 
     // AI & Data Science
-    { name: "Python", iconClass: "devicon-python-plain colored", category: "ai-ml" },
-    { name: "Scikit-Learn", iconClass: "devicon-scikitlearn-plain colored", category: "ai-ml" },
-    { name: "TensorFlow", iconClass: "devicon-tensorflow-original colored", category: "ai-ml" },
-    { name: "Pandas", iconClass: "devicon-pandas-original colored", category: "ai-ml" },
-    { name: "NumPy", iconClass: "devicon-numpy-original colored", category: "ai-ml" },
-    { name: "OpenCV", iconClass: "devicon-opencv-plain colored", category: "ai-ml" },
-    { name: "Linear & Logistic Regression", iconClass: "fa-solid fa-chart-line", category: "ai-ml" },
-    { name: "Decision Trees & Random Forests", iconClass: "fa-solid fa-network-wired", category: "ai-ml" },
-    { name: "XGBoost Classifier", iconClass: "fa-solid fa-bolt", category: "ai-ml" },
-    { name: "Support Vector Machines (SVM)", iconClass: "fa-solid fa-arrows-split-up-and-left", category: "ai-ml" },
-    { name: "Bayesian Networks", iconClass: "fa-solid fa-circle-nodes", category: "ai-ml" },
-    { name: "K-Means Clustering", iconClass: "fa-solid fa-cubes-stacked", category: "ai-ml" },
-    { name: "K-Nearest Neighbors (KNN)", iconClass: "fa-solid fa-people-arrows", category: "ai-ml" },
-    { name: "Naive Bayes Classifiers", iconClass: "fa-solid fa-calculator", category: "ai-ml" },
-    { name: "Agentic AI", iconClass: "fa-solid fa-robot", category: "ai-ml" },
-    { name: "Large Language Models (LLMs)", iconClass: "fa-solid fa-comments", category: "ai-ml" },
-    { name: "Retrieval-Augmented Gen (RAG)", iconClass: "fa-solid fa-database", category: "ai-ml" },
-    { name: "Prompt Engineering", iconClass: "fa-solid fa-terminal", category: "ai-ml" }
+    { name: "Scikit-Learn", category: "ai-ml" },
+    { name: "TensorFlow", category: "ai-ml" },
+    { name: "Pandas & NumPy", category: "ai-ml" },
+    { name: "OpenCV", category: "ai-ml" },
+    { name: "LLMs & GenAI", category: "ai-ml" },
+    { name: "RAG Systems", category: "ai-ml" },
+    { name: "Agentic AI", category: "ai-ml" },
+    { name: "Prompt Engineering", category: "ai-ml" }
 ];

@@ -43,7 +43,8 @@ export const chatWithAI = async (req: Request<unknown, unknown, ChatRequestBody>
             success: true,
             reply: result.replyText,
             intent: result.intent,
-            isFallback: result.isFallback
+            isFallback: result.isFallback,
+            suggestedFollowups: result.suggestedFollowups
         });
     } catch (error) {
         console.error("Error in chatWithAI controller:", error);

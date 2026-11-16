@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowDown, Download, Mail } from "lucide-react";
 import { profile } from "../../data/profile";
@@ -6,6 +7,7 @@ import { contact } from "../../data/contact";
 import { useTypingEffect } from "../../hooks/useTypingEffect";
 import WordReveal from "../common/WordReveal";
 import TechMarquee from "./TechMarquee";
+import ResumeModal from "../common/ResumeModal";
 
 const fade = {
     hidden: { opacity: 0, y: 16 },
@@ -24,6 +26,7 @@ const links = [
 ];
 
 export default function Hero() {
+    const [isResumeOpen, setIsResumeOpen] = useState(false);
     const typedRole = useTypingEffect(profile.typingRoles);
     const currentJob = experience.find(e => e.isCurrent);
 
@@ -125,26 +128,43 @@ export default function Hero() {
                     custom={3}
                     className="mt-9 flex flex-wrap items-center justify-center gap-2"
                 >
-                    {links.map(link => (
-                        <a
-                            key={link.label}
-                            id={link.label === "Résumé" ? "resumeLink" : undefined}
-                            href={link.href}
-                            target={link.href.startsWith("mailto:") || link.download ? undefined : "_blank"}
-                            rel="noopener noreferrer"
-                            download={link.download ? "Mahesh_Batta_Resume.pdf" : undefined}
-                            className="glass-faint flex items-center gap-2 rounded-full border border-glass-border px-3.5 py-2 text-[12.5px] font-medium text-text-secondary transition-all duration-300 hover:border-accent-border hover:text-accent"
-                        >
-                            {link.icon}
-                            {link.label}
-                        </a>
-                    ))}
+                    {links.map(link =>
+                        link.label === "Résumé" ? (
+                            <button
+                                key={link.label}
+                                id="resumeLink"
+                                type="button"
+                                onClick={() => setIsResumeOpen(true)}
+                                className="glass-faint flex items-center gap-2 rounded-full border border-glass-border px-3.5 py-2 text-[12.5px] font-medium text-text-secondary transition-all duration-300 hover:border-accent-border hover:text-accent cursor-pointer"
+                            >
+                                {link.icon}
+                                {link.label}
+                            </button>
+                        ) : (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                                rel="noopener noreferrer"
+                                className="glass-faint flex items-center gap-2 rounded-full border border-glass-border px-3.5 py-2 text-[12.5px] font-medium text-text-secondary transition-all duration-300 hover:border-accent-border hover:text-accent"
+                            >
+                                {link.icon}
+                                {link.label}
+                            </a>
+                        )
+                    )}
                 </motion.div>
             </div>
 
             <div className="relative z-content mx-auto w-full max-w-[1280px] px-6 sm:px-8 lg:px-14">
                 <TechMarquee />
             </div>
+
+            <ResumeModal
+                isOpen={isResumeOpen}
+                onClose={() => setIsResumeOpen(false)}
+                resumeUrl={profile.resumeUrl}
+            />
         </section>
     );
 }

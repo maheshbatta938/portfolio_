@@ -47,6 +47,19 @@ export default function Education() {
                     <p className="mt-6 border-t border-hairline pt-6 text-[14.5px] leading-relaxed text-text-secondary">
                         {education.description}
                     </p>
+
+                    {education.coursework && (
+                        <div className="mt-5 flex flex-wrap gap-1.5">
+                            {education.coursework.map(course => (
+                                <span
+                                    key={course}
+                                    className="rounded-full border border-glass-border bg-glass-faint px-3 py-1 text-[11.5px] font-medium text-text-secondary"
+                                >
+                                    {course}
+                                </span>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </BlurReveal>
         </Section>

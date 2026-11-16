@@ -1,10 +1,12 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, ExternalLink, MessageSquare } from "lucide-react";
+import { ArrowUpRight, ExternalLink, FolderGit2, MessageSquare, Sparkles } from "lucide-react";
 import type { Project } from "../../types";
 import { useAIAssistant } from "../../context/AIAssistantContext";
 
 export default function ProjectCard({ project }: { project: Project }) {
-    const { open: openAssistant } = useAIAssistant();
+    const { open: openAssistant, askQuestion } = useAIAssistant();
+    const [hasImgError, setHasImgError] = useState(false);
 
     return (
         <motion.article
@@ -16,12 +18,21 @@ export default function ProjectCard({ project }: { project: Project }) {
             className="group relative flex flex-col overflow-hidden rounded-[24px] border border-glass-border bg-surface-3 md:block"
         >
             <div className="relative aspect-16/11 w-full overflow-hidden">
-                <img
-                    src={project.image}
-                    alt={project.name}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
-                />
+                {hasImgError ? (
+                    <div className="h-full w-full bg-gradient-to-br from-surface-2 to-surface-3 flex flex-col items-center justify-center gap-2">
+                        <FolderGit2 className="h-8 w-8 text-text-tertiary" />
+                        <span className="text-[12px] text-text-tertiary text-center px-4">{project.name}</span>
+                    </div>
+                ) : (
+                    <img
+                        src={project.image}
+                        alt={project.name}
+                        loading="lazy"
+                        decoding="async"
+                        onError={() => setHasImgError(true)}
+                        className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
+                    />
+                )}
                 <div
                     aria-hidden="true"
                     className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-95"
@@ -45,6 +56,9 @@ export default function ProjectCard({ project }: { project: Project }) {
                 (and sits below the image on touch widths, where there is no hover). */}
             <div className="p-2.5 pt-0 md:absolute md:inset-x-2.5 md:bottom-2.5 md:p-0">
                 <div className="glass glass-strong overflow-hidden rounded-[18px] px-5 py-4">
+                    {project.impact && (
+                        <span className="eyebrow text-accent text-[10px]">{project.impact}</span>
+                    )}
                     <h3 className="font-heading text-[16.5px] font-semibold leading-snug text-text-primary">
                         {project.name}
                     </h3>
@@ -89,13 +103,25 @@ export default function ProjectCard({ project }: { project: Project }) {
                                     </a>
                                 )}
 
-                                {project.isChatTrigger && (
+                                {project.isChatTrigger ? (
                                     <button
                                         type="button"
                                         onClick={openAssistant}
-                                        className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-[11.5px] font-semibold text-on-accent transition-opacity hover:opacity-85"
+                                        className="flex items-center gap-1.5 rounded-full bg-accent px-3 py-1.5 text-[11.5px] font-semibold text-on-accent transition-opacity hover:opacity-85 cursor-pointer"
                                     >
                                         <MessageSquare className="h-3 w-3" /> Try it
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            askQuestion(
+                                                `Tell me about the architecture, tech stack, and key technical challenges of ${project.name}.`
+                                            )
+                                        }
+                                        className="flex items-center gap-1.5 rounded-full border border-glass-border px-3 py-1.5 text-[11.5px] font-medium text-text-tertiary transition-colors hover:border-accent-border hover:text-accent cursor-pointer"
+                                    >
+                                        <Sparkles className="h-3 w-3 text-accent" /> Ask AI
                                     </button>
                                 )}
 

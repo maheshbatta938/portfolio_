@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, FolderGit2, Sparkles } from "lucide-react";
 import type { Project } from "../../types";
+import { useAIAssistant } from "../../context/AIAssistantContext";
 
 export default function FeaturedProjectSpotlight({ project }: { project: Project }) {
+    const { askQuestion } = useAIAssistant();
+    const [hasImgError, setHasImgError] = useState(false);
+
     return (
         <motion.article
             initial={{ opacity: 0, y: 26 }}
@@ -12,11 +17,21 @@ export default function FeaturedProjectSpotlight({ project }: { project: Project
             className="group relative mb-5 overflow-hidden rounded-[28px] border border-glass-border bg-surface-3"
         >
             <div className="relative aspect-16/10 w-full overflow-hidden md:aspect-21/9">
-                <img
-                    src={project.image}
-                    alt={project.name}
-                    className="h-full w-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.04]"
-                />
+                {hasImgError ? (
+                    <div className="h-full w-full bg-gradient-to-br from-surface-2 to-surface-3 flex flex-col items-center justify-center gap-2">
+                        <FolderGit2 className="h-10 w-10 text-text-tertiary" />
+                        <span className="text-[13px] text-text-tertiary text-center px-6">{project.name}</span>
+                    </div>
+                ) : (
+                    <img
+                        src={project.image}
+                        alt={project.name}
+                        loading="lazy"
+                        decoding="async"
+                        onError={() => setHasImgError(true)}
+                        className="h-full w-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.04]"
+                    />
+                )}
                 <div
                     aria-hidden="true"
                     className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent md:bg-gradient-to-r md:from-black/75 md:via-black/30 md:to-transparent"
@@ -26,6 +41,10 @@ export default function FeaturedProjectSpotlight({ project }: { project: Project
             <div className="p-3 md:absolute md:inset-y-3 md:left-3 md:flex md:w-[min(46%,520px)] md:items-end md:p-0">
                 <div className="glass glass-strong w-full rounded-[22px] p-6 md:p-8">
                     <span className="eyebrow text-accent">{project.featuredLabel ?? "Featured"}</span>
+
+                    {project.impact && (
+                        <span className="eyebrow text-accent text-[10px] block mt-1">{project.impact}</span>
+                    )}
 
                     <h3 className="mt-4 font-heading text-[clamp(1.4rem,2.6vw,2rem)] font-semibold leading-tight">
                         {project.name}
@@ -71,6 +90,17 @@ export default function FeaturedProjectSpotlight({ project }: { project: Project
                                 </span>
                             )
                         )}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                askQuestion(
+                                    `Tell me about the architecture, tech stack, and key technical challenges of ${project.name}.`
+                                )
+                            }
+                            className="flex items-center gap-1.5 rounded-full border border-glass-border px-4 py-2 text-[12px] font-semibold text-text-secondary transition-colors hover:border-accent-border hover:text-accent cursor-pointer"
+                        >
+                            <Sparkles className="h-3.5 w-3.5 text-accent" /> Ask AI
+                        </button>
                     </div>
                 </div>
             </div>

@@ -60,14 +60,25 @@ export interface Project {
     liveLabel?: string;
     comingSoon?: boolean;
     isChatTrigger?: boolean;
+    impact?: string;
 }
 
 export type SkillCategoryId = "languages" | "frontend" | "backend" | "database-devops" | "ai-ml";
 
 export interface SkillItem {
     name: string;
-    iconClass: string;
+    iconClass?: string;
     category: SkillCategoryId;
+}
+
+export interface SkillMatrixRow {
+    id: string;
+    category: SkillCategoryId;
+    domain: string;
+    description: string;
+    proficiency: "Production / Core" | "Advanced" | "Proficient" | "Working Knowledge";
+    technologies: string[];
+    appliedIn: string;
 }
 
 export interface SkillFilter {
@@ -84,6 +95,7 @@ export interface Education {
     location: string;
     description: string;
     cgpa: string;
+    coursework?: string[];
 }
 
 export interface Certification {
@@ -91,10 +103,17 @@ export interface Certification {
     title: string;
     issuer: string;
     icon: string;
+    year?: number;
+    verifyUrl?: string;
 }
 
 export interface DsaProfile {
     totalSolved: number;
+    breakdown?: {
+        easy: number;
+        medium: number;
+        hard: number;
+    };
     topics: string[];
     links: { label: string; url: string }[];
 }
@@ -126,12 +145,15 @@ export interface ChatMessage {
     sender: ChatSender;
     text: string;
     origin?: ChatOrigin;
+    /** Suggested follow-up chips shown below the last bot bubble. */
+    suggestedFollowups?: string[];
 }
 
 export interface ChatApiResponse {
     success: boolean;
     reply?: string;
     intent?: string;
+    suggestedFollowups?: string[];
     isFallback?: boolean;
     error?: string;
 }

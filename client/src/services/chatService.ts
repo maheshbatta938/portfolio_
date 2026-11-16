@@ -31,6 +31,7 @@ export interface AssistantAnswer {
     isFallback: boolean;
     /** True when the request itself failed — the reply is a local apology. */
     isError: boolean;
+    suggestedFollowups?: string[];
 }
 
 /**
@@ -61,7 +62,8 @@ export async function askPortfolioAI(message: string, history: ChatMessage[]): P
                 reply: data.reply,
                 intent: data.intent ?? "general",
                 isFallback: Boolean(data.isFallback),
-                isError: false
+                isError: false,
+                suggestedFollowups: data.suggestedFollowups
             };
         }
 

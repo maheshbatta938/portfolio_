@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { StatItem } from "../../types";
 import { stats } from "../../data/stats";
 import { useCountUp } from "../../hooks/useCountUp";
@@ -7,6 +7,7 @@ import { tintAt } from "../../lib/tints";
 
 function StatCard({ stat, index }: { stat: StatItem; index: number }) {
     const { ref, value } = useCountUp<HTMLDivElement>(stat.value);
+    const isComplete = value === stat.value && stat.value > 0;
 
     return (
         <motion.div
@@ -23,7 +24,20 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
                 not jitter as the digits tick up. */}
             <p className="font-heading text-[38px] font-semibold leading-none tracking-tight text-text-primary tabular-nums md:text-[42px]">
                 {value.toLocaleString()}
-                <span style={{ color: "var(--tint)" }}>{stat.suffix}</span>
+                <AnimatePresence>
+                    {isComplete && stat.suffix && (
+                        <motion.span
+                            key="suffix"
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                            style={{ color: "var(--tint)", display: "inline-block" }}
+                        >
+                            {stat.suffix}
+                        </motion.span>
+                    )}
+                </AnimatePresence>
             </p>
             <span className="text-[13px] font-medium leading-snug text-text-secondary">{stat.label}</span>
         </motion.div>

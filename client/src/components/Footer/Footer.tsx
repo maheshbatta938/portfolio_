@@ -95,6 +95,9 @@ export default function Footer() {
                     <p>&copy; {new Date().getFullYear()} {profile.fullName}. All rights reserved.</p>
                     <p className="font-mono">Built with React, TypeScript &amp; Tailwind</p>
                 </div>
+                <p className="mt-4 text-center text-[11px] text-text-tertiary">
+                    React · TypeScript · Tailwind CSS · Gemini AI
+                </p>
             </div>
         </footer>
     );

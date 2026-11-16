@@ -2,6 +2,11 @@ import type { DsaProfile } from "../types";
 
 export const dsa: DsaProfile = {
     totalSolved: 400,
+    breakdown: {
+        easy: 180,
+        medium: 170,
+        hard: 50
+    },
     topics: [
         "Arrays",
         "Strings",

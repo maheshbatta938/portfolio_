@@ -125,7 +125,7 @@ class AssistantService {
         const steps = [
             { description: "Mahesh Batta is a Software Developer passionate about building modern web applications, backend systems, and AI-powered solutions." },
             { description: "I can help answer questions regarding his:" },
-            { description: "Experience & Internships (Recordent, Codex, etc.)" },
+            { description: "Experience & Roles (Smart Interviews, Recordent, Codex, etc.)" },
             { description: "Technical & Soft Skills (Angular, React, Node.js, DSA)" },
             { description: "Academic Background (Computer Science & Data Science)" },
             { description: "AI, ML, and Web Projects (SaaS apps, prediction models)" },
@@ -164,11 +164,31 @@ class AssistantService {
         return contents;
     }
 
+    getSuggestedFollowups(intent: string): string[] {
+        if (intent.includes("project")) {
+            return ["Tell me about NovaBank in detail", "Does he have any live demos?", "What backend tech does he use?"];
+        }
+        if (intent.includes("experience")) {
+            return ["What tech stack did he use at Smart Interviews?", "Any freelance or personal projects?", "What is he building right now?"];
+        }
+        if (intent.includes("education")) {
+            return ["What was his GPA?", "Any certifications?", "What did he build during college?"];
+        }
+        if (intent.includes("skills") || intent.includes("stack")) {
+            return ["How strong is his backend?", "Any AI/ML experience?", "What databases has he worked with?"];
+        }
+        if (intent.includes("contact")) {
+            return ["Can I see his resume?", "What is his LinkedIn?", "Is he open to remote work?"];
+        }
+        return ["What projects has he built?", "What is his current role?", "How can I reach him?"];
+    }
+
     /**
      * Generates a reply from the AI assistant using the provided message and chat history.
      */
     async generateReply(message: string, history: ClientHistoryItem[] = []): Promise<AssistantReply> {
         const intent = this.detectIntent(message);
+        const suggestedFollowups = this.getSuggestedFollowups(intent);
 
         try {
             const dynamicContext = contextService.retrieveContext(message);
@@ -203,7 +223,8 @@ class AssistantService {
             return {
                 replyText,
                 intent,
-                isFallback: false
+                isFallback: false,
+                suggestedFollowups
             };
         } catch (error) {
             console.error("Gemini API call failed, activating rule-based fallback response:", error);
@@ -212,7 +233,8 @@ class AssistantService {
             return {
                 replyText: fallbackText,
                 intent,
-                isFallback: true
+                isFallback: true,
+                suggestedFollowups
             };
         }
     }

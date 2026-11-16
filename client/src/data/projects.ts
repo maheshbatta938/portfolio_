@@ -11,7 +11,8 @@ export const projects: Project[] = [
         image: "/assets/images/novabank.png",
         featured: true,
         featuredLabel: "Featured • Full Stack + AI",
-        comingSoon: true
+        comingSoon: true,
+        impact: "AI-powered banking for 10k+ users"
     },
     {
         id: "buyer-data-management",
@@ -23,7 +24,8 @@ export const projects: Project[] = [
         image: "/assets/images/recordentproject.png",
         featured: true,
         githubUrl: "https://github.com/maheshbatta938/recordent-assignment",
-        liveUrl: "https://recordent-assignment-2.onrender.com/"
+        liveUrl: "https://recordent-assignment-2.onrender.com/",
+        impact: "Bulk imports for large datasets, 8+ screens"
     },
     {
         id: "make-a-note",
@@ -34,7 +36,8 @@ export const projects: Project[] = [
         categories: ["web"],
         image: "/assets/images/makeanote.png",
         featured: true,
-        comingSoon: true
+        comingSoon: true,
+        impact: "Redis caching + Docker + CI/CD pipeline"
     },
     {
         id: "notesapp",
@@ -46,7 +49,8 @@ export const projects: Project[] = [
         image: "/assets/images/memorymania.png",
         featured: false,
         githubUrl: "https://github.com/maheshbatta938/memorymania",
-        liveUrl: "https://memorymania.vercel.app/"
+        liveUrl: "https://memorymania.vercel.app/",
+        impact: "10+ APIs, full auth, deployed on Render"
     },
     {
         id: "ai-portfolio-assistant",
@@ -57,7 +61,8 @@ export const projects: Project[] = [
         categories: ["ai"],
         image: "/assets/images/xyz.png",
         featured: true,
-        isChatTrigger: true
+        isChatTrigger: true,
+        impact: "Real-time Gemini AI, context-aware answers"
     },
     {
         id: "ab-testing",
@@ -69,7 +74,8 @@ export const projects: Project[] = [
         image: "/assets/images/abtesting.png",
         featured: false,
         githubUrl: "https://github.com/maheshbatta938/ab-testing",
-        liveUrl: "https://ab-testing-fawn.vercel.app/"
+        liveUrl: "https://ab-testing-fawn.vercel.app/",
+        impact: "Bayesian probability for business decisions"
     },
     {
         id: "credit-card-fraud-detection",
@@ -81,6 +87,7 @@ export const projects: Project[] = [
         image: "/assets/images/creditcardfraud.png",
         featured: false,
         githubUrl: "https://github.com/maheshbatta938/creditcard-fraud-detection",
-        comingSoon: true
+        comingSoon: true,
+        impact: "XGBoost ML classification pipeline"
     }
 ];

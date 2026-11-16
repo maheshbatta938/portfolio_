@@ -36,8 +36,8 @@
   },
   "profile": {
     "fullName": "Mahesh Batta",
-    "currentRole": "Software Developer Intern",
-    "careerGoal": "Software Engineer",
+    "currentRole": "SDE-1",
+    "careerGoal": "Software Development Engineer",
     "location": "Hyderabad, Telangana, India",
     "graduatedYear": 2026
   },
@@ -75,11 +75,36 @@
   },
   "workExperience": [
     {
+      "role": "SDE-1",
+      "company": "Smart Interviews",
+      "location": "Hyderabad, India (Onsite)",
+      "duration": "Sep 2026 - Present",
+      "isCurrent": true,
+      "responsibilities": [
+        "Engineers core platform features for 'The Hive' — Smart Interviews' flagship coding, contest, and learning platform",
+        "Architected and delivered dynamic evaluation and feedback form systems featuring real-time single-page analytics dashboards and duplicate-safe ingestion",
+        "Built scalable contest pipelines including random contest generation, MCQ contest evaluation workflows, and automated problem validation tooling",
+        "Implemented custom rate-limiting middleware and role-based authentication to harden backend API endpoints",
+        "Optimized MongoDB schemas and queries for question banks, contest tracks, user submissions, and batch performance metrics",
+        "Collaborates in sprint delivery using Node.js, Express.js, Angular, TypeScript, and Bitbucket"
+      ],
+      "tech": [
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Angular",
+        "TypeScript",
+        "REST APIs",
+        "Rate Limiting",
+        "Bitbucket"
+      ]
+    },
+    {
       "role": "Software Developer Intern",
       "company": "Recordent Private Limited",
       "location": "Hyderabad, India",
-      "duration": "Mar 2026 - Present",
-      "isCurrent": true,
+      "duration": "Mar 2026 - Aug 2026",
+      "isCurrent": false,
       "responsibilities": [
         "Builds enterprise SaaS backend REST APIs with Node.js and Express.js",
         "Built a date-range filtering pipeline carrying frontend inputs through to SQL tables for the current financial year",

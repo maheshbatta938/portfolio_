@@ -4,10 +4,15 @@ import Footer from "../components/Footer/Footer";
 import ScrollToTopButton from "../components/common/ScrollToTopButton";
 import AIAssistant from "../components/AIAssistant/AIAssistant";
 import AssistantLauncher from "../components/AIAssistant/AssistantLauncher";
+import ReadingProgressBar from "../components/common/ReadingProgressBar";
+import ErrorBoundary from "../components/common/ErrorBoundary";
+import CommandPalette from "../components/common/CommandPalette";
 
 export default function AppShell({ children }: { children: ReactNode }) {
     return (
         <div className="relative min-h-screen bg-bg">
+            <ReadingProgressBar />
+            <CommandPalette />
             <a
                 href="#overview"
                 className="glass sr-only rounded-full px-4 py-2 text-sm font-semibold focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-toast"
@@ -24,7 +29,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
 
             <Footer />
 
-            <AIAssistant />
+            <ErrorBoundary fallbackTitle="AI Assistant Unavailable">
+                <AIAssistant />
+            </ErrorBoundary>
             <AssistantLauncher />
             <ScrollToTopButton />
         </div>
