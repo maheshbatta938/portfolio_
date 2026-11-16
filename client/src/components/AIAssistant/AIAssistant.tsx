@@ -70,7 +70,6 @@ export default function AIAssistant() {
     /** Shuffled starters — same order all day, rotates each day. */
     const shuffledStarters = useMemo(
         () => seededShuffle(STARTERS, new Date().getDay()).slice(0, 4),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     );
 
@@ -133,7 +132,10 @@ export default function AIAssistant() {
         if (isOpen && pendingQuestion) {
             const questionToSend = pendingQuestion;
             clearPendingQuestion();
-            void sendMessage(questionToSend);
+            const timer = setTimeout(() => {
+                void sendMessage(questionToSend);
+            }, 0);
+            return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen, pendingQuestion]);

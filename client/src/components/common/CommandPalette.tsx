@@ -44,7 +44,13 @@ export default function CommandPalette() {
         const handleKeyDown = (e: KeyboardEvent) => {
             if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
                 e.preventDefault();
-                setIsOpen(prev => !prev);
+                setIsOpen(prev => {
+                    if (!prev) {
+                        setQuery("");
+                        setSelectedIndex(0);
+                    }
+                    return !prev;
+                });
             } else if (e.key === "Escape" && isOpen) {
                 setIsOpen(false);
             }
@@ -56,24 +62,27 @@ export default function CommandPalette() {
 
     // Custom event to open from anywhere (e.g. Header button)
     useEffect(() => {
-        const handleOpenEvent = () => setIsOpen(true);
+        const handleOpenEvent = () => {
+            setQuery("");
+            setSelectedIndex(0);
+            setIsOpen(true);
+        };
         window.addEventListener("open-command-palette", handleOpenEvent);
         return () => window.removeEventListener("open-command-palette", handleOpenEvent);
     }, []);
 
-    // Focus input when opened
+    // Focus input and lock scroll when opened
     useEffect(() => {
         if (isOpen) {
-            setQuery("");
-            setSelectedIndex(0);
-            setTimeout(() => inputRef.current?.focus(), 50);
+            const timer = setTimeout(() => inputRef.current?.focus(), 50);
             document.body.style.overflow = "hidden";
+            return () => {
+                clearTimeout(timer);
+                document.body.style.overflow = "";
+            };
         } else {
             document.body.style.overflow = "";
         }
-        return () => {
-            document.body.style.overflow = "";
-        };
     }, [isOpen]);
 
     const navigateTo = (hash: string) => {
@@ -275,11 +284,6 @@ export default function CommandPalette() {
         );
     }, [items, query]);
 
-    // Reset selected index on query change
-    useEffect(() => {
-        setSelectedIndex(0);
-    }, [query]);
-
     // Keyboard navigation within list
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "ArrowDown") {
@@ -325,14 +329,20 @@ export default function CommandPalette() {
                                 ref={inputRef}
                                 type="text"
                                 value={query}
-                                onChange={e => setQuery(e.target.value)}
+                                onChange={e => {
+                                    setQuery(e.target.value);
+                                    setSelectedIndex(0);
+                                }}
                                 placeholder="Type a command, question, or jump to section..."
                                 className="flex-1 bg-transparent text-[14px] text-text-primary placeholder:text-text-tertiary outline-none"
                             />
                             {query && (
                                 <button
                                     type="button"
-                                    onClick={() => setQuery("")}
+                                    onClick={() => {
+                                        setQuery("");
+                                        setSelectedIndex(0);
+                                    }}
                                     className="text-text-tertiary hover:text-text-primary p-1"
                                 >
                                     <X className="h-3.5 w-3.5" />
