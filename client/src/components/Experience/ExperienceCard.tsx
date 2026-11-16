@@ -179,10 +179,14 @@ export default function ExperienceCard({ job, index }: { job: WorkExperience; in
                                 <div className="flex flex-wrap items-center gap-1.5 font-mono text-[10.5px] text-text-tertiary">
                                     {job.buildFlow.flow.map((step, i) => (
                                         <span key={step} className="flex items-center gap-1.5">
-                                            <span className="rounded-md bg-surface-3 px-2 py-1 text-text-secondary">
+                                            <span className="rounded-md border border-hairline bg-surface-3 px-2 py-1 text-text-secondary transition-all hover:border-accent-border hover:bg-surface-2 hover:text-accent">
                                                 {step}
                                             </span>
-                                            {i < job.buildFlow!.flow.length - 1 && <span>&rarr;</span>}
+                                            {i < job.buildFlow!.flow.length - 1 && (
+                                                <span className="text-accent font-bold animate-pulse" aria-hidden="true">
+                                                    &rarr;
+                                                </span>
+                                            )}
                                         </span>
                                     ))}
                                 </div>

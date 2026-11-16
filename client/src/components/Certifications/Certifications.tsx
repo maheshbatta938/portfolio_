@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Sparkles } from "lucide-react";
 import { certifications } from "../../data/certifications";
 import Section from "../common/Section";
 import SectionHeading from "../common/SectionHeading";
 import { tintAt } from "../../lib/tints";
+import { useAIAssistant } from "../../context/AIAssistantContext";
 
 export default function Certifications() {
+    const { askQuestion } = useAIAssistant();
     return (
         <Section id="certifications" fx="lines" intensity="subtle">
             <SectionHeading
@@ -35,7 +37,7 @@ export default function Certifications() {
                                 {item.issuer}
                                 {item.year && <span> · {item.year}</span>}
                             </p>
-                            {item.verifyUrl && (
+                            {item.verifyUrl ? (
                                 <a
                                     href={item.verifyUrl}
                                     target="_blank"
@@ -44,6 +46,18 @@ export default function Certifications() {
                                 >
                                     Verify credential <ArrowUpRight className="h-3 w-3" />
                                 </a>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        askQuestion(
+                                            `What key topics, technologies, and skills did Mahesh cover during his ${item.title} certification from ${item.issuer}?`
+                                        )
+                                    }
+                                    className="mt-2.5 inline-flex items-center gap-1 text-[11.5px] font-medium text-text-tertiary transition-colors hover:text-accent cursor-pointer"
+                                >
+                                    <Sparkles className="h-3 w-3 text-accent" /> Ask AI about syllabus
+                                </button>
                             )}
                         </div>
                     </motion.div>

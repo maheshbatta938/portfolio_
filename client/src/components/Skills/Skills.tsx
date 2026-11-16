@@ -1,8 +1,9 @@
 import { useState, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { Check, Copy, Search } from "lucide-react";
 import type { SkillCategoryId } from "../../types";
 import { skillFilters, skillMatrix } from "../../data/skills";
+import { useToast } from "../../context/ToastContext";
 import Section from "../common/Section";
 import SectionHeading from "../common/SectionHeading";
 import FilterPills from "../common/FilterPills";
@@ -11,8 +12,22 @@ import TechStackDiagram from "./TechStackDiagram";
 type FilterId = SkillCategoryId | "all";
 
 export default function Skills() {
+    const { showToast } = useToast();
     const [activeFilter, setActiveFilter] = useState<FilterId>("all");
     const [searchQuery, setSearchQuery] = useState("");
+    const [copiedStack, setCopiedStack] = useState(false);
+
+    const handleCopyStack = () => {
+        const lines = skillMatrix.map(
+            row => `• ${row.domain} (${row.proficiency}):\n  ${row.technologies.join(", ")}`
+        );
+        const text = `Mahesh Batta — Technical Competencies & Tech Stack:\n\n${lines.join("\n\n")}`;
+        navigator.clipboard.writeText(text).then(() => {
+            setCopiedStack(true);
+            showToast("Complete tech stack copied to clipboard!");
+            setTimeout(() => setCopiedStack(false), 2000);
+        });
+    };
 
     const filteredRows = useMemo(() => {
         return skillMatrix.filter(row => {
@@ -87,8 +102,23 @@ export default function Skills() {
                         className="glass w-full rounded-full py-2 pl-9 pr-4 text-[13px] text-text-primary placeholder:text-text-tertiary focus:border-accent focus:outline-none"
                     />
                 </div>
-                <div className="text-[12px] font-mono text-text-tertiary">
-                    Showing {filteredRows.length} domain{filteredRows.length !== 1 ? "s" : ""}
+                <div className="flex items-center gap-3">
+                    <button
+                        type="button"
+                        onClick={handleCopyStack}
+                        title="Copy structured tech stack matrix to clipboard"
+                        className="glass flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-medium text-text-secondary transition-all hover:border-accent-border hover:text-accent cursor-pointer"
+                    >
+                        {copiedStack ? (
+                            <Check className="h-3.5 w-3.5 text-accent" />
+                        ) : (
+                            <Copy className="h-3.5 w-3.5" />
+                        )}
+                        <span>{copiedStack ? "Copied matrix" : "Copy stack"}</span>
+                    </button>
+                    <div className="text-[12px] font-mono text-text-tertiary">
+                        Showing {filteredRows.length} domain{filteredRows.length !== 1 ? "s" : ""}
+                    </div>
                 </div>
             </div>
 
